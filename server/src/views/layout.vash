@@ -1,0 +1,18 @@
+<!doctype html>
+<html>
+<head>
+  <title>@model.title</title>
+  @html.block("head")
+</head>
+
+<body id="page-top">
+  <section id="body" >
+    <div>
+      <h1>@model.title</h1>
+    </div>
+    @html.block("body")
+  </section>
+
+  @html.block('scripts')
+</body>
+</html>
