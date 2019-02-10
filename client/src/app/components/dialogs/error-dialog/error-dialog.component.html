@@ -1,0 +1,26 @@
+<div mdbModal #basicModal="mdb-modal" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="myBasicModalLabel" aria-hidden="true"
+    [config]="{backdrop: false, ignoreBackdropClick: true, show: false}">
+    <div class="modal-dialog modal-notify modal-danger" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close pull-right" aria-label="Close" (click)="hideModal()">
+                    <span aria-hidden="true">×</span>
+                </button>
+                <p class="heading lead">{{ title }}</p>
+            </div>
+            <div class="modal-body">
+                <div class="md-form">
+                    <div class="inline dialog-icon">
+                        <i class="fa fa-times fa-4x mb-3 animated rotateIn"></i>
+                    </div>
+                     <div class="inline dialog-message">
+                        <p>{{ message }}</p>
+                     </div>
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-sm btn-outline-danger" (click)="hideModal()" mdbWavesEffect>Ok</button>
+            </div>
+        </div>
+    </div>
+</div>
