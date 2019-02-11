@@ -32,6 +32,7 @@ import { MainFooterComponent } from './components/main/main-footer/main-footer.c
 import { DeleteDialogComponent } from './components/dialogs/delete-dialog/delete-dialog.component';
 import { SuccessDialogComponent } from './components/dialogs/success-dialog/success-dialog.component';
 import { ErrorDialogComponent } from './components/dialogs/error-dialog/error-dialog.component';
+import { config } from 'rxjs';
 
 
 @NgModule({
@@ -51,7 +52,7 @@ import { ErrorDialogComponent } from './components/dialogs/error-dialog/error-di
     ReactiveFormsModule,
     AppRoutingModule,
     HttpClientModule,
-    ToastrModule.forRoot(),
+    ToastrModule.forRoot(new ToastrCustomOptions),
     MDBBootstrapModule.forRoot(),
     AppMaterialsModule,
   ],
