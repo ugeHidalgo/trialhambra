@@ -33,6 +33,9 @@ import { DeleteDialogComponent } from './components/dialogs/delete-dialog/delete
 import { SuccessDialogComponent } from './components/dialogs/success-dialog/success-dialog.component';
 import { ErrorDialogComponent } from './components/dialogs/error-dialog/error-dialog.component';
 import { config } from 'rxjs';
+import { LoginComponent } from './login/login/login.component';
+import { RegisterComponent } from './login/register/register.component';
+import { UserComponent } from './login/user/user.component';
 
 
 @NgModule({
@@ -43,7 +46,10 @@ import { config } from 'rxjs';
     ErrorDialogComponent,
     PageNotFoundComponent,
     MessagesComponent,
-    MainFooterComponent
+    MainFooterComponent,
+    LoginComponent,
+    RegisterComponent,
+    UserComponent
   ],
   imports: [
     BrowserModule,
