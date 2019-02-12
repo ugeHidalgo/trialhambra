@@ -3,7 +3,7 @@ import { RouterModule, Routes } from '@angular/router';
 //import { CommonModule } from '@angular/common';
 
 // Routing Modules
-
+import { LoginRoutingModule } from '../login/login-routing.module';
 
 const routes: Routes = [
   { path: '', redirectTo: '/dashboard', pathMatch: 'full'}
@@ -12,6 +12,7 @@ const routes: Routes = [
 @NgModule({
   imports: [
     //CommonModule,
+    LoginRoutingModule,
     RouterModule.forRoot(routes)
   ],
 
