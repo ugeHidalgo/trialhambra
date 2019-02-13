@@ -1,3 +1,90 @@
 <p>
   register works!
 </p>
+<!--Modal: Register Form-->
+<div mdbModal #form="mdb-modal" [config]="{ show: true }" class="modal fade" id="modalRegister" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+  <div class="modal-dialog cascading-modal col-md-12" role="document">
+      <!--Content-->
+      <div class="modal-content">
+
+          <!--Header-->
+          <div class="modal-header light-blue darken-3 white-text">
+              <h4 class="title"><i class="fa fa-user-plus"></i> Register</h4>
+              <button type="button" class="close waves-effect waves-light" data-dismiss="modal"
+                      aria-label="Close" (click)="form.hide()" [routerLink]="['/']">
+                  <span aria-hidden="true">×</span>
+              </button>
+          </div>
+          <!--Body-->
+          <div class="modal-body">
+              <div class="container-fluid">
+                  <form [formGroup]="validatingForm">
+                      <div class="row">
+                          <div class="md-form form-sm col-md-4">
+                              <input mdbActive type="text" id="username" class="form-control"
+                                  [(ngModel)]="user.username" formControlName="username">
+                              <label for="username">Your user name</label>
+                              <div *ngIf="validatingForm.controls['username'].touched">
+                                  <div class="alert alert-danger" *ngIf="validatingForm.controls['username'].errors?.username">Username is required</div>
+                              </div>
+                          </div>
+                          <div class="md-form form-sm col-md-4">
+                              <input mdbActive type="text" id="firstname" class="form-control"
+                                  [(ngModel)]="user.firstName" formControlName="firtname">
+                              <label for="firstname">Your first name</label>
+                          </div>
+                          <div class="md-form form-sm col-md-4">
+                              <input mdbActive type="text" id="lastname" class="form-control"
+                                  [(ngModel)]="user.lastName" formControlName="lastname">
+                              <label for="lastname">Your last name</label>
+                          </div>
+                      </div>
+
+                      <div class="row">
+                          <div class="md-form form-lg col-md-12">
+                              <i class="fa fa-envelope prefix"></i>
+                              <input mdbActive type="text" id="email" class="form-control"
+                                  [(ngModel)]="user.eMail" formControlName="email">
+                              <label for="email">Your e-mail</label>
+                              <div *ngIf="validatingForm.controls['email'].touched">
+                                  <div class="alert alert-danger" *ngIf="validatingForm.controls['email'].errors?.email">Invalid email</div>
+                              </div>
+                          </div>
+                      </div>
+
+                      <div class="row">
+                          <div class="md-form form-sm col-md-6">
+                              <i class="fa fa-lock prefix"></i>
+                              <input mdbActive type="password" id="password" class="form-control"
+                                  [(ngModel)]="user.password" formControlName="password">
+                              <label for="password">Your password</label>
+                          </div>
+                          <div class="md-form form-sm col-md-6">
+                              <i class="fa fa-lock prefix"></i>
+                              <input mdbActive type="password" id="password2" class="form-control">
+                              <label for="password2">Repeat password</label>
+                          </div>
+                      </div>
+                  </form>
+              </div>
+              <div class="text-center mt-2">
+                  <button class="btn btn-info waves-light" mdbRippleRadius (click)="register()">Sign up
+                      <i class="fa fa-sign-in ml-1"></i>
+                  </button>
+              </div>
+          </div>
+          <!--Footer-->
+          <div class="modal-footer">
+              <div class="options text-center text-md-right mt-1">
+                  <p>Already have an account? <a [routerLink]="['/login']">Log In</a></p>
+              </div>
+              <button type="button" class="btn btn-outline-info ml-auto" data-dismiss="modal"
+                  (click)="form.hide()" mdbRippleRadius [routerLink]="['/']">Close
+              </button>
+          </div>
+      </div>
+      <!--/.Content-->
+  </div>
+</div>
+<!--Modal: Register Form-->
+
