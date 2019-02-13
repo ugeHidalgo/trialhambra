@@ -36,6 +36,7 @@ import { config } from 'rxjs';
 import { LoginComponent } from './login/login/login.component';
 import { RegisterComponent } from './login/register/register.component';
 import { UserComponent } from './login/user/user.component';
+import { DashboardComponent } from './dashboard/dashboard.component';
 
 
 @NgModule({
@@ -49,7 +50,8 @@ import { UserComponent } from './login/user/user.component';
     MainFooterComponent,
     LoginComponent,
     RegisterComponent,
-    UserComponent
+    UserComponent,
+    DashboardComponent
   ],
   imports: [
     BrowserModule,
