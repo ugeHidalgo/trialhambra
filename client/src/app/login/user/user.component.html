@@ -1,38 +1,38 @@
 <div *ngIf="user" class="user-detail">
   <div class="card">
       <div class="card-header indigo lighten-1 white-text">
-          <h4>User: {{ user.username }}</h4>
+          <h4>Usuario: {{ user.username }}</h4>
       </div>
       <div class="card-body">
           <form [formGroup]="validatingForm">
               <div class="row">
                   <div class="md-form form-sm col-md-3">
                       <input mdbActive type="text" id="firstName" class="form-control" required formControlName="firstName">
-                      <label for="name">First name:</label>
+                      <label for="name">Nombre:</label>
                   </div>
                   <div class="md-form form-sm col-md-3">
                       <input mdbActive type="text" id="lastName" class="form-control" formControlName="lastName">
-                      <label for="description">Last name: </label>
+                      <label for="description">Apellidos: </label>
                   </div>
               </div>
 
               <div class="row">
                   <div class="md-form form-lg col-md-8">
                       <input mdbActive type="text" id="eMail" class="form-control" formControlName="eMail">
-                      <label for="iban">eMail:</label>
+                      <label for="iban">Correo electrónico:</label>
                   </div>
               </div>
           </form>
       </div>
       <div class="card-footer">
           <button class="btn btn-sm btn-outline-danger" (click)="onClickRefresh()" [disabled]="validatingForm.pristine">
-              <i class="fa fa-refresh ml-1"> Refresh</i>
+              <i class="fa fa-refresh ml-1"> Refrescar</i>
           </button>
           <button class="btn btn-sm btn-outline-dark-green" (click)="onClickSave()" [disabled]="validatingForm.pristine">
-              <i class="fa fa-save ml-1"> Save</i>
+              <i class="fa fa-save ml-1"> Grabar</i>
           </button>
           <button class="btn btn-sm btn-outline-dark-green" (click)="onClickChangePassword()">
-              <i class="fa fa-key ml-1"> Change Password</i>
+              <i class="fa fa-key ml-1"> Cambiar contraseña</i>
           </button>
       </div>
   </div>

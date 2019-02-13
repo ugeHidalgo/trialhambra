@@ -1,6 +1,5 @@
 import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
-//import { CommonModule } from '@angular/common';
 import { DashboardComponent } from '../dashboard/dashboard.component';
 import { PageNotFoundComponent } from '../components/main/not-found/not-found.component';
 
@@ -15,7 +14,6 @@ const routes: Routes = [
 
 @NgModule({
   imports: [
-    //CommonModule,
     LoginRoutingModule,
     RouterModule.forRoot(routes)
   ],

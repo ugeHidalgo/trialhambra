@@ -7,7 +7,7 @@
 
             <!--Header-->
             <div class="modal-header light-blue darken-3 white-text">
-                <h4 class="title"><i class="fa fa-user"></i> Log in</h4>
+                <h4 class="title"><i class="fa fa-user"></i>Inicio de sesión</h4>
                 <button type="button" class="close waves-effect waves-light" data-dismiss="modal"
                     aria-label="Close" (click)="form.hide()" [routerLink]="['/']">
                     <span aria-hidden="true">×</span>
@@ -19,18 +19,18 @@
                     <i class="fa fa-user prefix"></i>
                     <input mdbActive type="text" id="username" class="form-control"
                         [(ngModel)]="model.userName" >
-                    <label for="username">Your username</label>
+                    <label for="username">Tu usuario...</label>
                 </div>
 
                 <div class="md-form form-sm">
                     <i class="fa fa-lock prefix"></i>
                     <input mdbActive type="password" id="form31" class="form-control"
                         [(ngModel)]="model.password" >
-                    <label for="form31">Your password</label>
+                    <label for="form31">Tu contraseña...</label>
                 </div>
 
                 <div class="text-center mt-2">
-                    <button class="btn btn-info waves-light" mdbRippleRadius (click)="onLogin()">Log in
+                    <button class="btn btn-info waves-light" mdbRippleRadius (click)="onLogin()">Iniciar sesión
                         <i class="fa fa-sign-in ml-1"></i>
                     </button>
                 </div>
@@ -39,11 +39,11 @@
             <!--Footer-->
             <div class="modal-footer">
                 <div class="options text-center text-md-right mt-1">
-                    <p>Not a member? <a [routerLink]="['/register']">Register</a></p>
-                    <p>Forgot <a href="#">Password?</a></p>
+                    <p>¿No tienes cuenta? <a [routerLink]="['/register']">Registro</a></p>
+                    <p>¿Olvidaste la <a href="#">contraseña?</a></p>
                 </div>
                 <button type="button" class="btn btn-outline-info ml-auto" data-dismiss="modal"
-                    (click)="form.hide()" [routerLink]="['/']" mdbRippleRadius>Close
+                    (click)="form.hide()" [routerLink]="['/']" mdbRippleRadius>Cerrar
                 </button>
             </div>
         </div>
