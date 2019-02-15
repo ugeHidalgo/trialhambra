@@ -11,7 +11,7 @@ import { GlobalsService } from './globals/globals.service';
 
 export class AppComponent {
   title = 'TriAlhambra App';
-  topMenuData: any;
+  //topMenuData: any;
 
   constructor ( protected globals: GlobalsService, private router: Router ) {
     const me = this,
@@ -19,7 +19,7 @@ export class AppComponent {
 
     me.globals.setUser(username);
 
-    this.topMenuData = JSON.parse(`[{
+    /* this.topMenuData = JSON.parse(`[{
         "text": "File",
         "submenus": [{
           "text": "Accounts",
@@ -29,7 +29,7 @@ export class AppComponent {
           "routerLink": "/costcentres"
         }]
       }]
-    `);
+    `); */
   }
 
   onClick(link) {

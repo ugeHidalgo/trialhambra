@@ -24,7 +24,7 @@ export class GlobalsService {
 
   storeUserDataInLocalStorage(userName, token) {
     localStorage.setItem(this.localStorageStore, JSON.stringify({
-      app: 'TotalHero',
+      app: 'triAlhambra',
       username: userName,
       token: token
     }));
