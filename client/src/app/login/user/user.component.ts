@@ -73,7 +73,7 @@ export class UserComponent implements OnInit, OnChanges, ComponentCanDeactivate 
 
     me.validatingForm = me.fb.group({
       password: ['', Validators.required ],
-      firstName: [ '' ],
+      firstName: '',
       lastName: '',
       eMail: ''
     });
