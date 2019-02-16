@@ -11,25 +11,12 @@ import { GlobalsService } from './globals/globals.service';
 
 export class AppComponent {
   title = 'TriAlhambra App';
-  //topMenuData: any;
 
   constructor ( protected globals: GlobalsService, private router: Router ) {
     const me = this,
           username = me.globals.getUserNameFromLocalStorage();
 
     me.globals.setUser(username);
-
-    /* this.topMenuData = JSON.parse(`[{
-        "text": "File",
-        "submenus": [{
-          "text": "Accounts",
-          "routerLink": "/accounts"
-        }, {
-          "text": "Cost centres",
-          "routerLink": "/costcentres"
-        }]
-      }]
-    `); */
   }
 
   onClick(link) {
