@@ -1,3 +1,22 @@
-.user-detail {
-  padding: 20px 10px 10px 10px;
+.user-view {
+  padding: 20px;
+}
+
+.user-card {
+  width: 800px;
+}
+
+.card-up {
+  border-top-right-radius: 5px;
+  border-top-left-radius: 5px;
+}
+
+.username-title {
+  color: white;
+  font: bold;
+}
+
+.profile-image{
+  margin: -40px 0px 5px 0px;
+  height: 100px;
 }
