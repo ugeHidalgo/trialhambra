@@ -5,7 +5,7 @@
                     <div class="card-up indigo lighten-1">
                         <!--Avatar-->
                         <div class="avatar mx-auto text-center">
-                            <img src="https://mdbootstrap.com/img/Photos/Avatars/img%20%2831%29.jpg" class="profile-image rounded-circle">
+                            <img src="../../../assets/user-icon2.png" class="profile-image rounded-circle">
                         </div>
                         <!--Title: Username-->
                         <mdb-card-title class="text-center username-title">
@@ -13,20 +13,20 @@
                         </mdb-card-title>
                     </div>
                     <mdb-card-body>
-                        <form [formGroup]="validatingForm">
+                        <form [formGroup]="validatingForm" class="card-form">
                             <div class="row">
-                                <div class="md-form form-sm col-md-3">
+                                <div class="md-form form-sm col-md-4">
                                     <input mdbInput type="text" id="firstName" class="form-control" required formControlName="firstName">
                                     <label for="name">Nombre:</label>
                                 </div>
-                                <div class="md-form form-sm col-md-3">
+                                <div class="md-form form-sm col-md-8">
                                     <input mdbInput type="text" id="lastName" class="form-control" formControlName="lastName">
                                     <label for="description">Apellidos: </label>
                                 </div>
                             </div>
 
                             <div class="row">
-                                <div class="md-form form-lg col-md-8">
+                                <div class="md-form form-lg col-md-12">
                                     <input mdbInput type="text" id="eMail" class="form-control" formControlName="eMail">
                                     <label for="iban">Correo electrónico:</label>
                                 </div>
