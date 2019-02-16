@@ -31,7 +31,7 @@ export class UserComponent implements OnInit, OnChanges, ComponentCanDeactivate 
     protected globals: GlobalsService,
     private userService: UserService,
     private fb: FormBuilder,
-    public toastr: ToastrService, vcr: ViewContainerRef) {
+    public toastr: ToastrService) {
       const me = this;
       me.createForm();
   }
