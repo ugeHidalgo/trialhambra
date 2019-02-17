@@ -16,6 +16,7 @@ export class RegisterComponent implements OnInit {
   user: User = new User();
   loading = false;
   validatingForm: FormGroup;
+  submitted = false;
 
   constructor(
     private router: Router,
@@ -30,19 +31,30 @@ export class RegisterComponent implements OnInit {
   }
 
   createForm() {
-    this.validatingForm = this.fb.group({
+    const me = this;
+
+    me.validatingForm = me.fb.group({
       username: [ '', Validators.required ],
       firstname: '',
       lastname: '',
-      password: '',
-      email: [ '', Validators.email ]
-    });
+      password: ['', [Validators.required, Validators.minLength(6)]],
+      password2: '',
+      email: [ '', [Validators.required, Validators.email]]
+    }, {
+      validator: me.shouldMatch('password', 'password2')
+  });
   }
 
   register() {
     const me = this;
 
     me.loading = true;
+    me.submitted = true;
+
+    if (this.validatingForm.invalid) {
+        return;
+    }
+
     me.userService.registerUser(me.user)
       .subscribe(
         newUserAdded => {
@@ -54,5 +66,22 @@ export class RegisterComponent implements OnInit {
           me.loading = false;
         }
       );
+  }
+
+  shouldMatch(controlName1: string, controlName2: string) {
+    return (formGroup: FormGroup) => {
+      const control1 = formGroup.controls[controlName1],
+            control2 = formGroup.controls[controlName2];
+
+      if (control2.errors && !control2.errors.shouldMatch) {
+        return;
+      }
+
+      if (control1.value !== control2.value) {
+        control2.setErrors( {shouldMatch: true});
+      } else {
+        control2.setErrors(null);
+      }
+    }
   }
 }
