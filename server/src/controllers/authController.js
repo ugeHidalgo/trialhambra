@@ -21,7 +21,7 @@ module.exports.init = function (app) {
 
         userManager.updateUser ( userToUpdate, function(error, updatedUser){
              if (error){
-                response.status(400).send('Failed to save user: ' + userToUpdate.name);
+                response.status(400).send('Failed to save user: ' + error);
             } else {
                 response.set('Content-Type','application/json');
                 response.status(201).send(updatedUser);

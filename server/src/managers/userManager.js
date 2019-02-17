@@ -41,20 +41,27 @@ module.exports.updateUser = function (user, callbackFn) {
  * Private methods.
  */
 function createNewUser (user, callbackFn){
-    var newUser = new User(user),
+
+    User.find({username: user.username},(error, data) => {
+        if (data.length > 0) {
+            callbackFn('User ' + user.username + ' already exists.', user);
+        } else {
+            var newUser = new User(user),
             salt = hasher.createSalt();
 
-        newUser.password = hasher.computeHash(user.password, salt);
-        newUser.salt = salt;
+            newUser.password = hasher.computeHash(user.password, salt);
+            newUser.salt = salt;
 
-        newUser.save(function (error) {
-            if (error) {
-                callbackFn(error, null);
-            } else {
-                console.log ('New user saved with username ' + newUser.username + ' and id: ' + newUser._id);
-                callbackFn(null, newUser);
-            }
-        });
+            newUser.save(function (error) {
+                if (error) {
+                    callbackFn(error, null);
+                } else {
+                    console.log ('New user saved with username ' + newUser.username + ' and id: ' + newUser._id);
+                    callbackFn(null, newUser);
+                }
+            });
+        }
+    });
 };
 
 function updateExistingUser (user, callbackFn) {
