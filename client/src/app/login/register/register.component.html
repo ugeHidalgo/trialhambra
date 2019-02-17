@@ -1,92 +1,91 @@
-<!--Modal: Register Form-->
-<div mdbModal #form="mdb-modal" [config]="{ show: true }" class="modal fade" id="modalRegister" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
-  <div class="modal-dialog cascading-modal col-md-12" role="document">
-      <!--Content-->
-      <div class="modal-content">
-
-          <!--Header-->
-          <div class="modal-header light-blue darken-3 white-text">
-              <h4 class="title"><i class="fa fa-user-plus"></i> Registro de usuario</h4>
-              <button type="button" class="close waves-effect waves-light" data-dismiss="modal"
-                      aria-label="Close" (click)="form.hide()" [routerLink]="['/']">
-                  <span aria-hidden="true">×</span>
-              </button>
-          </div>
-          <!--Body-->
-          <div class="modal-body">
-              <div class="container-fluid">
-                  <form [formGroup]="validatingForm">
-                        <div class="row">
-                            <div class="md-form form-sm col-md-4">
-                                <input mdbInput type="text" id="username" class="form-control"
-                                    [(ngModel)]="user.username" formControlName="username">
-                                <label for="username">Usuario</label>
-                                <div *ngIf="validatingForm.controls['username'].errors && submitted">
-                                    <div class="alert alert-danger" *ngIf="validatingForm.controls['username'].errors.required">El nombre de ususario es obligatorio</div>
-                                </div>
+<div *ngIf="user" class="user-view">
+        <div class="row justify-content-center">
+            <div class="col-md-12">
+                <mdb-card class="testimonial-card user-card mx-auto">
+                        <div class="card-up indigo lighten-1">
+                            <!--Avatar-->
+                            <div class="avatar mx-auto text-center">
+                                <img src="../../../assets/user-icon2.png" class="profile-image rounded-circle">
                             </div>
-                            <div class="md-form form-sm col-md-8">
-                                <i class="fa fa-envelope prefix"></i>
-                                <input mdbInput type="email" id="email" class="form-control"
-                                    [(ngModel)]="user.eMail" formControlName="email">
-                                <label for="email">Correo electrónico</label>
-                                <div *ngIf="validatingForm.controls['email'].errors && submitted">
-                                    <div class="alert alert-danger" *ngIf="validatingForm.controls['email'].errors.required">El correo electrónico es obligatorio</div>
-                                    <div class="alert alert-danger" *ngIf="validatingForm.controls['email'].errors.email">Correo electrónico no válido</div>
-                                </div>
+                            <!--Title: Username-->
+                            <mdb-card-title class="text-center username-title">
+                                <h4>Registro de nuevo usuario</h4>
+                            </mdb-card-title>
+                        </div>
+                        <mdb-card-body>
+                            <div class="container-fluid">
+                                <form [formGroup]="validatingForm">
+                                        <div class="row">
+                                            <div class="md-form form-sm col-md-4">
+                                                <input mdbInput type="text" id="username" class="form-control"
+                                                    [(ngModel)]="user.username" formControlName="username">
+                                                <label for="username">Usuario</label>
+                                                <div *ngIf="validatingForm.controls['username'].errors && submitted">
+                                                    <div class="alert alert-danger" *ngIf="validatingForm.controls['username'].errors.required">El nombre de ususario es obligatorio</div>
+                                                </div>
+                                            </div>
+                                            <div class="md-form form-sm col-md-8">
+                                                <i class="fa fa-envelope prefix"></i>
+                                                <input mdbInput type="email" id="email" class="form-control"
+                                                    [(ngModel)]="user.eMail" formControlName="email">
+                                                <label for="email">Correo electrónico</label>
+                                                <div *ngIf="validatingForm.controls['email'].errors && submitted">
+                                                    <div class="alert alert-danger" *ngIf="validatingForm.controls['email'].errors.required">El correo electrónico es obligatorio</div>
+                                                    <div class="alert alert-danger" *ngIf="validatingForm.controls['email'].errors.email">Correo electrónico no válido</div>
+                                                </div>
+                                            </div>
+                                        </div>
+
+                                        <div class="row">
+                                            <div class="md-form form-sm col-md-4">
+                                                <input mdbInput type="text" id="firstname" class="form-control"
+                                                    [(ngModel)]="user.firstName" formControlName="firstname">
+                                                <label for="firstname">Nombre</label>
+                                            </div>
+                                            <div class="md-form form-sm col-md-8">
+                                                <input mdbInput type="text" id="lastname" class="form-control"
+                                                    [(ngModel)]="user.lastName" formControlName="lastname">
+                                                <label for="lastname">Apellidos</label>
+                                            </div>
+                                    </div>
+
+                                    <div class="row">
+                                        <div class="md-form form-sm col-md-6">
+                                                <i class="fa fa-lock prefix"></i>
+                                                <input mdbInput type="password" id="password" class="form-control"
+                                                    [(ngModel)]="user.password" formControlName="password">
+                                                <label for="password"> Contraseña</label>
+                                                <div *ngIf="validatingForm.controls['password'].errors && submitted">
+                                                    <div class="alert alert-danger" *ngIf="validatingForm.controls['password'].errors.required">La contraseña es obligatoria</div>
+                                                    <div class="alert alert-danger" *ngIf="validatingForm.controls['password'].errors.minlength">La contraseña debe tener al menos 6 caracteres</div>
+                                                </div>
+                                        </div>
+                                        <div class="md-form form-sm col-md-6">
+                                                <i class="fa fa-lock prefix"></i>
+                                                <input mdbInput type="password" id="password2" class="form-control" formControlName="password2">
+                                                <label for="password2">Repetir contraseña</label>
+                                                <div *ngIf="validatingForm.controls['password2'].errors && submitted">
+                                                    <div class="alert alert-danger" *ngIf="validatingForm.controls['password2'].errors.shouldMatch">Las contraseñas no coinciden</div>
+                                                </div>
+                                        </div>
+                                    </div>
+                                </form>
+                            </div>
+                        </mdb-card-body>
+                        <div class="card-footer">
+                            <div class="options text-center mt-1">
+                                <p>¿Tienes ya una cuenta de usuario? <a [routerLink]="['/login']">Inicio de sesión</a></p>
+                            </div>
+                            <div class="text-center mt-2">
+                                <button class="btn btn-info waves-light" mdbRippleRadius (click)="register()">Crear usuario
+                                    <i class="fa fa-sign-in ml-1"></i>
+                                </button>
                             </div>
                         </div>
+                </mdb-card>
+            </div>
+        </div>
+    </div>
 
-                        <div class="row">
-                            <div class="md-form form-sm col-md-4">
-                                <input mdbInput type="text" id="firstname" class="form-control"
-                                    [(ngModel)]="user.firstName" formControlName="firstname">
-                                <label for="firstname">Nombre</label>
-                            </div>
-                            <div class="md-form form-sm col-md-8">
-                                <input mdbInput type="text" id="lastname" class="form-control"
-                                    [(ngModel)]="user.lastName" formControlName="lastname">
-                                <label for="lastname">Apellidos</label>
-                            </div>
-                      </div>
 
-                      <div class="row">
-                          <div class="md-form form-sm col-md-6">
-                                <i class="fa fa-lock prefix"></i>
-                                <input mdbInput type="password" id="password" class="form-control"
-                                    [(ngModel)]="user.password" formControlName="password">
-                                <label for="password"> Contraseña</label>
-                                <div *ngIf="validatingForm.controls['password'].errors && submitted">
-                                    <div class="alert alert-danger" *ngIf="validatingForm.controls['password'].errors.required">La contraseña es obligatoria</div>
-                                    <div class="alert alert-danger" *ngIf="validatingForm.controls['password'].errors.minlength">La contraseña debe tener al menos 6 caracteres</div>
-                                </div>
-                          </div>
-                          <div class="md-form form-sm col-md-6">
-                                <i class="fa fa-lock prefix"></i>
-                                <input mdbInput type="password" id="password2" class="form-control" formControlName="password2">
-                                <label for="password2">Repetir contraseña</label>
-                                <div *ngIf="validatingForm.controls['password2'].errors && submitted">
-                                    <div class="alert alert-danger" *ngIf="validatingForm.controls['password2'].errors.shouldMatch">Las contraseñas no coinciden</div>
-                                </div>
-                          </div>
-                      </div>
-                  </form>
-              </div>
-              <div class="text-center mt-2">
-                  <button class="btn btn-info waves-light" mdbRippleRadius (click)="register()">Crear usuario
-                      <i class="fa fa-sign-in ml-1"></i>
-                  </button>
-              </div>
-          </div>
-          <!--Footer-->
-          <div class="modal-footer">
-              <div class="options text-center text-md-right mt-1">
-                  <p>¿Tienes ya una cuenta de usuario? <a [routerLink]="['/login']">Inicio de sesión</a></p>
-              </div>
-          </div>
-      </div>
-      <!--/.Content-->
-  </div>
-</div>
-<!--Modal: Register Form-->
 
