@@ -7,7 +7,7 @@
 }
 
 .card-body {
-  margin: 5px;
+  margin: 20px;
   padding: 0;
 }
 
@@ -17,7 +17,7 @@
 }
 
 .card-form {
-  padding: 0 60px 0 0;
+  padding: 0;
 }
 
 .username-title {
@@ -32,4 +32,9 @@
 
 .checkbox-area {
   margin-top: 30px;
+}
+
+.mat-form-field {
+  padding: 0;
+  margin: 0;
 }

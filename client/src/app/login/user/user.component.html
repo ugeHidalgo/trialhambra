@@ -15,60 +15,72 @@
                     <mdb-card-body class="card-body">
                         <form [formGroup]="validatingForm" class="card-form">
                             <div class="container">
-                            <div class="row">
-                                <div class="col-sm-5">
-                                    <mat-form-field class="full-width-form-field" >
-                                        <input matInput placeholder="Nombre:" formControlName="firstName">
-                                        <div *ngIf="validatingForm.controls.firstName.touched">
-                                            <div class="alert alert-danger" *ngIf="validatingForm.controls.firstName.invalid">El nombre es obligatorio</div>
-                                        </div>
-                                    </mat-form-field>
-                                </div>
-                                <div class="col-sm-7">
-                                    <mat-form-field class="full-width-form-field" >
-                                        <input matInput placeholder="Apellidos:" formControlName="lastName">
-                                        <div *ngIf="validatingForm.controls.lastName.touched">
-                                            <div class="alert alert-danger" *ngIf="validatingForm.controls.lastName.invalid">Los apellidos son obligatorio</div>
-                                        </div>
-                                    </mat-form-field>
-                                </div>
-                            </div>
-                            <div class="row">
-                                <div class="md-form form-sm col-sm-4">
-                                    <mat-form-field class="full-width-form-field">
-                                        <input matInput [matDatepicker]="picker" placeholder="Fecha Nac.:" formControlName="birthDate" [value]=user.birthDate>
-                                        <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
-                                        <mat-datepicker #picker></mat-datepicker>
-                                    </mat-form-field>
-                                </div>
-                                <div class="md-form form-sm col-sm-6">
-                                    <mat-form-field class="full-width-form-field" >
-                                        <input matInput placeholder="e-mail:" formControlName="eMail">
-                                    </mat-form-field>
-                                </div>
-                                <div class="col-sm-2">
-                                    <div class="checkbox-area">
-                                        <mat-checkbox formControlName="active"
-                                            value="validatingForm.controls['active'].value">En uso
-                                        </mat-checkbox>
-                                        <mat-checkbox formControlName="admin"
-                                            value="validatingForm.controls['admin'].value">Aministrador
-                                        </mat-checkbox>
+                                <div class="row">
+                                    <div class="col-sm-5">
+                                        <mat-form-field class="full-width-form-field" >
+                                            <input matInput placeholder="Nombre:" formControlName="firstName">
+                                            <div *ngIf="validatingForm.controls.firstName.touched">
+                                                <div class="alert alert-danger" *ngIf="validatingForm.controls.firstName.invalid">El nombre es obligatorio</div>
+                                            </div>
+                                        </mat-form-field>
+                                    </div>
+                                    <div class="col-sm-7">
+                                        <mat-form-field class="full-width-form-field" >
+                                            <input matInput placeholder="Apellidos:" formControlName="lastName">
+                                            <div *ngIf="validatingForm.controls.lastName.touched">
+                                                <div class="alert alert-danger" *ngIf="validatingForm.controls.lastName.invalid">Los apellidos son obligatorio</div>
+                                            </div>
+                                        </mat-form-field>
                                     </div>
                                 </div>
-                            </div>
-                            <div class="row">
-                                <div class="md-form form-sm col-sm-4">
-                                    <mat-form-field class="full-width-form-field" >
-                                        <input matInput placeholder="Creado:" formControlName="created" readonly>
-                                    </mat-form-field>
+                                <div class="row">
+                                    <div class="md-form form-sm col-sm-5">
+                                        <mat-form-field class="full-width-form-field">
+                                            <input matInput [matDatepicker]="picker" placeholder="Fecha Nac.:" formControlName="birthDate" [value]=user.birthDate>
+                                            <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
+                                            <mat-datepicker #picker></mat-datepicker>
+                                        </mat-form-field>
+                                    </div>
+                                    <div class="md-form form-sm col-sm-7">
+                                        <mat-form-field class="full-width-form-field" >
+                                            <input matInput placeholder="e-mail:" formControlName="eMail">
+                                        </mat-form-field>
+                                    </div>
                                 </div>
-                                <div class="md-form form-sm col-sm-4">
-                                    <mat-form-field class="full-width-form-field" >
-                                        <input matInput placeholder="Actualizado:" formControlName="updated" readonly>
-                                    </mat-form-field>
+                                <div class="row">
+                                    <div class="col-sm-4">
+                                        <mat-form-field class="full-width-form-field" >
+                                            <input matInput placeholder="Tlf:" formControlName="phone">
+                                        </mat-form-field>
+                                    </div>
+                                    <div class="col-sm-4">
+                                        <mat-form-field class="full-width-form-field" >
+                                            <input matInput placeholder="Móvil:" formControlName="mobile">
+                                        </mat-form-field>
+                                    </div>
                                 </div>
-                            </div>
+                                <div class="row">
+                                    <div class="col-sm-2">
+                                        <div class="checkbox-area">
+                                            <mat-checkbox formControlName="active"
+                                                value="validatingForm.controls['active'].value">En uso
+                                            </mat-checkbox>
+                                            <mat-checkbox formControlName="admin"
+                                                value="validatingForm.controls['admin'].value">Aministrador
+                                            </mat-checkbox>
+                                        </div>
+                                    </div>
+                                    <div class="md-form form-sm col-sm-4 offset-sm-2">
+                                        <mat-form-field class="full-width-form-field" >
+                                            <input matInput placeholder="Creado:" formControlName="created" readonly>
+                                        </mat-form-field>
+                                    </div>
+                                    <div class="md-form form-sm col-sm-4">
+                                        <mat-form-field class="full-width-form-field" >
+                                            <input matInput placeholder="Actualizado:" formControlName="updated" readonly>
+                                        </mat-form-field>
+                                    </div>
+                                </div>
                             </div>
                         </form>
                     </mdb-card-body>
