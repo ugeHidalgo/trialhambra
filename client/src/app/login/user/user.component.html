@@ -1,6 +1,6 @@
 <div *ngIf="user" class="user-view">
     <div class="row justify-content-center">
-        <div class="col-md-12">
+        <div class="col-sm-12">
             <mdb-card class="testimonial-card user-card mx-auto">
                     <div class="card-up indigo lighten-1">
                         <!--Avatar-->
@@ -12,24 +12,63 @@
                             <h4>{{ user.username }}</h4>
                         </mdb-card-title>
                     </div>
-                    <mdb-card-body>
+                    <mdb-card-body class="card-body">
                         <form [formGroup]="validatingForm" class="card-form">
+                            <div class="container">
                             <div class="row">
-                                <div class="md-form form-sm col-md-4">
-                                    <input mdbInput type="text" id="firstName" class="form-control" required formControlName="firstName">
-                                    <label for="name">Nombre:</label>
+                                <div class="col-sm-5">
+                                    <mat-form-field class="full-width-form-field" >
+                                        <input matInput placeholder="Nombre:" formControlName="firstName">
+                                        <div *ngIf="validatingForm.controls.firstName.touched">
+                                            <div class="alert alert-danger" *ngIf="validatingForm.controls.firstName.invalid">El nombre es obligatorio</div>
+                                        </div>
+                                    </mat-form-field>
                                 </div>
-                                <div class="md-form form-sm col-md-8">
-                                    <input mdbInput type="text" id="lastName" class="form-control" formControlName="lastName">
-                                    <label for="description">Apellidos: </label>
+                                <div class="col-sm-7">
+                                    <mat-form-field class="full-width-form-field" >
+                                        <input matInput placeholder="Apellidos:" formControlName="lastName">
+                                        <div *ngIf="validatingForm.controls.lastName.touched">
+                                            <div class="alert alert-danger" *ngIf="validatingForm.controls.lastName.invalid">Los apellidos son obligatorio</div>
+                                        </div>
+                                    </mat-form-field>
                                 </div>
                             </div>
-
                             <div class="row">
-                                <div class="md-form form-lg col-md-12">
-                                    <input mdbInput type="text" id="eMail" class="form-control" formControlName="eMail">
-                                    <label for="iban">Correo electrónico:</label>
+                                <div class="md-form form-sm col-sm-4">
+                                    <mat-form-field class="full-width-form-field">
+                                        <input matInput [matDatepicker]="picker" placeholder="Fecha Nac.:" formControlName="birthDate" [value]=user.birthDate>
+                                        <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
+                                        <mat-datepicker #picker></mat-datepicker>
+                                    </mat-form-field>
                                 </div>
+                                <div class="md-form form-sm col-sm-6">
+                                    <mat-form-field class="full-width-form-field" >
+                                        <input matInput placeholder="e-mail:" formControlName="eMail">
+                                    </mat-form-field>
+                                </div>
+                                <div class="col-sm-2">
+                                    <div class="checkbox-area">
+                                        <mat-checkbox formControlName="active"
+                                            value="validatingForm.controls['active'].value">En uso
+                                        </mat-checkbox>
+                                        <mat-checkbox formControlName="admin"
+                                            value="validatingForm.controls['admin'].value">Aministrador
+                                        </mat-checkbox>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="md-form form-sm col-sm-4">
+                                    <mat-form-field class="full-width-form-field" >
+                                        <input matInput placeholder="Creado:" formControlName="created" readonly>
+                                    </mat-form-field>
+                                </div>
+                                <div class="md-form form-sm col-sm-4">
+                                    <mat-form-field class="full-width-form-field" >
+                                        <input matInput placeholder="Actualizado:" formControlName="updated" readonly>
+                                    </mat-form-field>
+                                </div>
+                            </div>
                             </div>
                         </form>
                     </mdb-card-body>

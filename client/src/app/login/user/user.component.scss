@@ -3,7 +3,12 @@
 }
 
 .user-card {
-  width: 600px;
+  width: 700px;
+}
+
+.card-body {
+  margin: 5px;
+  padding: 0;
 }
 
 .card-up {
@@ -12,7 +17,7 @@
 }
 
 .card-form {
-  padding: 0 40px 0 40px;
+  padding: 0 60px 0 0;
 }
 
 .username-title {
@@ -20,7 +25,11 @@
   font: bold;
 }
 
-.profile-image{
+.profile-image {
   margin: -40px 0px 5px 0px;
   height: 100px;
+}
+
+.checkbox-area {
+  margin-top: 30px;
 }

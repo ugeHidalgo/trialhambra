@@ -7,7 +7,14 @@ var moongoose = require ('mongoose'),
         salt: String,
         firstName: String,
         lastName: String,
-        eMail: String
+        eMail: String,
+        active: Boolean,
+        admin: Boolean,
+        birthDate: Date,
+        created : { type : Date, default : Date.now },
+        updated : { type : Date, default : Date.now },
+        phone: String,
+        mobile: String
     });
 
 module.exports = moongoose.model ('Users', UserSchema);

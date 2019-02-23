@@ -10,7 +10,7 @@ import { ToastrModule } from 'ngx-toastr'; // Toaster library used to messaging
 import { ToastrCustomOptions } from './messages/toastr/toastrCustomOptions';
 import { MDBBootstrapModule } from 'angular-bootstrap-md'; // MDBootstrap: Used for modals.
 import { AppMaterialsModule } from './app-modules/app-materials.module'; // Angular material design components https://material.angular.io/
-
+import { MatCheckboxComponent } from './components/grid/checkbox/mat-checkbox.component';
 
 // App modules
 import { AppRoutingModule } from './app-modules/app-routing.module';
@@ -42,6 +42,7 @@ import { DashboardComponent } from './dashboard/dashboard.component';
 @NgModule({
   declarations: [
     AppComponent,
+    MatCheckboxComponent,
     DeleteDialogComponent,
     SuccessDialogComponent,
     ErrorDialogComponent,

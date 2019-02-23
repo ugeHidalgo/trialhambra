@@ -75,7 +75,14 @@ export class UserComponent implements OnInit, OnChanges, ComponentCanDeactivate 
       password: ['', Validators.required ],
       firstName: '',
       lastName: '',
-      eMail: ''
+      eMail: '',
+      birthDate: '',
+      created: '',
+      updated: '',
+      active: '',
+      admin: '',
+      phone: '',
+      mobile: ''
     });
   }
 
@@ -86,7 +93,14 @@ export class UserComponent implements OnInit, OnChanges, ComponentCanDeactivate 
       password: me.user.password,
       firstName: me.user.firstName,
       lastName: me.user.lastName,
-      eMail: me.user.eMail
+      eMail: me.user.eMail,
+      birthdate: me.user.birthDate,
+      created: me.user.created,
+      updated: me.user.updated,
+      active: me.user.active,
+      admin: me.user.admin,
+      phone: me.user.phone,
+      mobile: me.user.mobile
     });
   }
 
@@ -99,6 +113,13 @@ export class UserComponent implements OnInit, OnChanges, ComponentCanDeactivate 
     newUser.firstName = formModel.firstName;
     newUser.lastName = formModel.lastName;
     newUser.eMail = formModel.eMail;
+    newUser.birthDate = formModel.birthDate;
+    newUser.created = formModel.created;
+    newUser.updated = formModel.updated;
+    newUser.active = formModel.active;
+    newUser.admin = formModel.admin;
+    newUser.phone = formModel.phone;
+    newUser.mobile = formModel.mobile;
 
     return newUser;
   }
