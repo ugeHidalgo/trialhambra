@@ -16,15 +16,15 @@
                             <div class="container-fluid">
                                 <form [formGroup]="validatingForm">
                                         <div class="row">
-                                            <div class="md-form form-sm col-md-4">
+                                            <div class="md-form form-sm col-md-5">
                                                 <input mdbInput type="text" id="username" class="form-control"
                                                     [(ngModel)]="user.username" formControlName="username">
                                                 <label for="username">Usuario</label>
                                                 <div *ngIf="validatingForm.controls['username'].errors && submitted">
-                                                    <div class="alert alert-danger" *ngIf="validatingForm.controls['username'].errors.required">El nombre de ususario es obligatorio</div>
+                                                    <div class="alert alert-danger" *ngIf="validatingForm.controls['username'].errors.required">El ususario es obligatorio</div>
                                                 </div>
                                             </div>
-                                            <div class="md-form form-sm col-md-8">
+                                            <div class="md-form form-sm col-md-7">
                                                 <i class="fa fa-envelope prefix"></i>
                                                 <input mdbInput type="email" id="email" class="form-control"
                                                     [(ngModel)]="user.eMail" formControlName="email">

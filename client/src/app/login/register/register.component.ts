@@ -73,6 +73,10 @@ export class RegisterComponent implements OnInit {
       const control1 = formGroup.controls[controlName1],
             control2 = formGroup.controls[controlName2];
 
+      if (control1.errors) {
+        return;
+      }
+
       if (control2.errors && !control2.errors.shouldMatch) {
         return;
       }
