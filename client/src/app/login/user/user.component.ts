@@ -25,6 +25,7 @@ export class UserComponent implements OnInit, OnChanges, ComponentCanDeactivate 
   user: User;
   username: string;
   validatingForm: FormGroup;
+  hidePasswordFields: boolean;
 
   constructor(
     private location: Location,
@@ -40,6 +41,7 @@ export class UserComponent implements OnInit, OnChanges, ComponentCanDeactivate 
     const me = this;
     me.username = me.globals.userNameLogged;
     me.getLoggedUser(me.username);
+    me.hidePasswordFields = true;
   }
 
   ngOnChanges() {
@@ -52,7 +54,14 @@ export class UserComponent implements OnInit, OnChanges, ComponentCanDeactivate 
 
   // Buttons actions
   onClickRefresh() {
-    this.rebuildForm();
+    const me = this;
+
+    me.rebuildForm();
+    me.hidePasswordFields = true;
+  }
+
+  onClickChangePassword() {
+    this.hidePasswordFields = false;
   }
 
   onClickSave(): void {
@@ -72,7 +81,9 @@ export class UserComponent implements OnInit, OnChanges, ComponentCanDeactivate 
     const me = this;
 
     me.validatingForm = me.fb.group({
+      oldPassword: '',
       password: ['', Validators.required ],
+      password2: '',
       firstName: '',
       lastName: '',
       eMail: '',

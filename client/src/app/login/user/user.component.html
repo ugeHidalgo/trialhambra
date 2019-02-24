@@ -15,7 +15,7 @@
                     <mdb-card-body class="card-body">
                         <form [formGroup]="validatingForm" class="card-form">
                             <div class="container">
-                                <div class="row">
+                                <div class="row"> <!-- First and last names -->
                                     <div class="col-sm-5">
                                         <mat-form-field class="full-width-form-field" >
                                             <input matInput placeholder="Nombre:" formControlName="firstName">
@@ -33,7 +33,7 @@
                                         </mat-form-field>
                                     </div>
                                 </div>
-                                <div class="row">
+                                <div class="row"> <!-- Birthdate and email -->
                                     <div class="md-form form-sm col-sm-5">
                                         <mat-form-field class="full-width-form-field">
                                             <input matInput [matDatepicker]="picker" placeholder="Fecha Nac.:" formControlName="birthDate" [value]=user.birthDate>
@@ -47,7 +47,7 @@
                                         </mat-form-field>
                                     </div>
                                 </div>
-                                <div class="row">
+                                <div class="row"> <!-- Phone numbers -->
                                     <div class="col-sm-4">
                                         <mat-form-field class="full-width-form-field" >
                                             <input matInput placeholder="Tlf:" formControlName="phone">
@@ -59,7 +59,7 @@
                                         </mat-form-field>
                                     </div>
                                 </div>
-                                <div class="row">
+                                <div class="row"> <!-- Active, admin and dates -->
                                     <div class="col-sm-2">
                                         <div class="checkbox-area">
                                             <mat-checkbox formControlName="active"
@@ -78,6 +78,30 @@
                                     <div class="md-form form-sm col-sm-4">
                                         <mat-form-field class="full-width-form-field" >
                                             <input matInput placeholder="Actualizado:" formControlName="updated" readonly>
+                                        </mat-form-field>
+                                    </div>
+                                </div>
+                                <div class="row" [ngClass]="{'hidden': hidePasswordFields}"> <!-- Password -->
+                                    <div class="col-sm-4">
+                                        <mat-form-field class="full-width-form-field" >
+                                            <input matInput type="password" formControlName="oldPassword" placeholder="Contraseña actual:">
+                                        </mat-form-field>
+                                    </div>
+                                    <div class="col-sm-4">
+                                        <mat-form-field class="full-width-form-field" >
+                                            <input matInput type="password" formControlName="password" placeholder="Nueva Contraseña:">
+                                            <div *ngIf="validatingForm.controls['password'].errors && submitted">
+                                                <div class="alert alert-danger" *ngIf="validatingForm.controls['password'].errors.required">La contraseña es obligatoria</div>
+                                                <div class="alert alert-danger" *ngIf="validatingForm.controls['password'].errors.minlength">La contraseña debe tener al menos 6 caracteres</div>
+                                            </div>
+                                        </mat-form-field>
+                                    </div>
+                                    <div class="col-sm-4">
+                                        <mat-form-field class="full-width-form-field" >
+                                            <input matInput type="password" formControlName="password2" placeholder="Repetir nueva contraseña:">
+                                            <div *ngIf="validatingForm.controls['password2'].errors && submitted">
+                                                <div class="alert alert-danger" *ngIf="validatingForm.controls['password2'].errors.shouldMatch">Las contraseñas no coinciden</div>
+                                            </div>
                                         </mat-form-field>
                                     </div>
                                 </div>
