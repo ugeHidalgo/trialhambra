@@ -69,7 +69,13 @@ function updateExistingUser (user, callbackFn) {
     var updatedValues = {
         firstName: user.firstName,
         lastName: user.lastName,
-        eMail: user.eMail
+        eMail: user.eMail,
+        active: user.active,
+        admin: user.admin,
+        birthDate: user.birthDate,
+        updated: new Date(),
+        phone: user.phone,
+        mobile: user.mobile
     };
 
     User.findOneAndUpdate(

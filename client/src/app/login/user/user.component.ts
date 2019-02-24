@@ -1,6 +1,6 @@
-import { Component, OnInit, HostBinding, ViewContainerRef, OnChanges } from '@angular/core';
+import { Component, OnInit, HostBinding, OnChanges } from '@angular/core';
 import { Observable } from 'rxjs';
-import { Location } from '@angular/common';
+import { Location, DatePipe } from '@angular/common';
 import { slideInDownAnimation } from '../../animations';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { ToastrService } from 'ngx-toastr';
@@ -87,16 +87,18 @@ export class UserComponent implements OnInit, OnChanges, ComponentCanDeactivate 
   }
 
   rebuildForm() {
-    const me = this;
+    const me = this,
+          datePipe = new DatePipe(navigator.language),
+          format = 'dd/MM/yyyy';
 
     me.validatingForm.reset({
       password: me.user.password,
       firstName: me.user.firstName,
       lastName: me.user.lastName,
       eMail: me.user.eMail,
-      birthdate: me.user.birthDate,
-      created: me.user.created,
-      updated: me.user.updated,
+      birthDate: datePipe.transform(me.user.birthDate, format),
+      created: datePipe.transform(me.user.created, format),
+      updated: datePipe.transform(me.user.updated, format),
       active: me.user.active,
       admin: me.user.admin,
       phone: me.user.phone,
