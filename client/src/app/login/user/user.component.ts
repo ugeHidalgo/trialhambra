@@ -2,7 +2,7 @@ import { Component, OnInit, HostBinding, OnChanges } from '@angular/core';
 import { Observable } from 'rxjs';
 import { Location, DatePipe } from '@angular/common';
 import { slideInDownAnimation } from '../../animations';
-import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { FormBuilder, FormGroup, Validators, FormControl } from '@angular/forms';
 import { ToastrService } from 'ngx-toastr';
 import { ComponentCanDeactivate } from '../../guards/pending-changes.guard';
 
@@ -25,7 +25,22 @@ export class UserComponent implements OnInit, OnChanges, ComponentCanDeactivate 
   user: User;
   username: string;
   validatingForm: FormGroup;
+  passwordsGroup: FormGroup;
   hidePasswordFields: boolean;
+
+  validation_messages = {
+    'oldPassword': [
+      { type: 'required', message: 'La contraseña actual es obligatoria.'}
+    ],
+    'password': [
+      { type: 'required', message: 'La contraseña nueva es obligatoria.'},
+      { type: 'minlength', message: 'La contraseña debe tener un mínimo de seis caracteres.'}
+    ],
+    'password2': [
+      { type: 'required', message: 'Es obligatorio reescribir la nueva contraseña.'},
+      { type: 'areEqual', message: 'Las contraseñas deben ser iguales'}
+    ]
+  }
 
   constructor(
     private location: Location,
@@ -67,6 +82,8 @@ export class UserComponent implements OnInit, OnChanges, ComponentCanDeactivate 
   onClickSave(): void {
     const me = this;
 
+    if (me.validatingForm.invalid) return;
+
     me.user = this.getFormData();
     me.userService.updateUser(me.user)
       .subscribe( () => {
@@ -80,22 +97,37 @@ export class UserComponent implements OnInit, OnChanges, ComponentCanDeactivate 
   createForm() {
     const me = this;
 
-    me.validatingForm = me.fb.group({
-      oldPassword: ['', Validators.required],
-      password: ['', [Validators.required, Validators.minLength(6)] ],
-      password2: '',
-      firstName: '',
-      lastName: '',
-      eMail: '',
-      birthDate: '',
-      created: '',
-      updated: '',
-      active: '',
-      admin: '',
-      phone: '',
-      mobile: ''
-    },{
-      validator: me.shouldMatch('password', 'password2')
+    me.passwordsGroup = new FormGroup({
+      oldPassword: new FormControl ( '',  {
+        validators: Validators.required,
+        updateOn: 'blur'
+      }),
+      password: new FormControl ('' , {
+        validators: Validators.compose([
+          Validators.required,
+          Validators.minLength(6)]),
+        updateOn: 'blur'
+      }),
+      password2: new FormControl ('' , {
+        validators: Validators.required,
+        updateOn: 'blur'
+      })
+    }, (formGroup: FormGroup) => {
+      return this.areEqual(formGroup, "password", "password2")
+    });
+
+    me.validatingForm = this.fb.group({
+      firstName: new FormControl ('' , {}),
+      lastName: new FormControl ('' , {}),
+      eMail: new FormControl ('' , {}),
+      birthDate: new FormControl ('' , {}),
+      created: new FormControl ('' , {}),
+      updated: new FormControl ('' , {}),
+      active: new FormControl ('' , {}),
+      admin: new FormControl ('' , {}),
+      phone: new FormControl ('' , {}),
+      mobile: new FormControl ('' , {}),
+      passwordsGroup: me.passwordsGroup
     });
   }
 
@@ -104,8 +136,13 @@ export class UserComponent implements OnInit, OnChanges, ComponentCanDeactivate 
           datePipe = new DatePipe(navigator.language),
           format = 'dd/MM/yyyy';
 
-    me.validatingForm.reset({
+    me.passwordsGroup.reset({
+      oldPassword: '',
       password: me.user.password,
+      password2: '',
+    });
+
+    me.validatingForm.reset({
       firstName: me.user.firstName,
       lastName: me.user.lastName,
       eMail: me.user.eMail,
@@ -124,7 +161,7 @@ export class UserComponent implements OnInit, OnChanges, ComponentCanDeactivate 
           formModel = me.validatingForm.value,
           newUser: User = me.user;
 
-    newUser.password = formModel.password;
+    newUser.password = '';
     newUser.firstName = formModel.firstName;
     newUser.lastName = formModel.lastName;
     newUser.eMail = formModel.eMail;
@@ -150,24 +187,24 @@ export class UserComponent implements OnInit, OnChanges, ComponentCanDeactivate 
       });
   }
 
-  shouldMatch(controlName1: string, controlName2: string) {
-    return (formGroup: FormGroup) => {
-      const control1 = formGroup.controls[controlName1],
-            control2 = formGroup.controls[controlName2];
+  areEqual(formGroup: FormGroup, controlName1: string, controlName2: string) {
+    const control1 = formGroup.controls[controlName1],
+          control2 = formGroup.controls[controlName2];
 
-      if (control1.errors) {
-        return;
-      }
+    if (control1.errors) {
+      return;
+    }
 
-      if (control2.errors && !control2.errors.shouldMatch) {
-        return;
-      }
+    if (control2.errors && !control2.errors.areEqual) {
+      return;
+    }
 
-      if (control1.value !== control2.value) {
-        control2.setErrors( {shouldMatch: true});
-      } else {
-        control2.setErrors(null);
-      }
+    if (control1.value !== control2.value) {
+      control2.setErrors( {areEqual: true});
+      return {areEqual: true}
+    } else {
+      control2.setErrors(null);
+      return null;
     }
   }
 }

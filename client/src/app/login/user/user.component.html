@@ -81,27 +81,35 @@
                                         </mat-form-field>
                                     </div>
                                 </div>
-                                <div class="row" [ngClass]="{'hidden': hidePasswordFields}"> <!-- Password -->
+                                <div formGroupName="passwordsGroup" class="row" [ngClass]="{'hidden': hidePasswordFields}"> <!-- Password -->
                                     <div class="col-sm-4">
                                         <mat-form-field class="full-width-form-field" >
                                             <input matInput type="password" formControlName="oldPassword" placeholder="Contraseña actual:">
+                                            <mat-error *ngFor="let validation of validation_messages.oldPassword">
+                                                <mat-error *ngIf="(validatingForm.get('passwordsGroup').controls['oldPassword'].hasError(validation.type) && validatingForm.get('passwordsGroup').controls['oldPassword'].dirty || validatingForm.get('passwordsGroup').controls['oldPassword'].touched)">
+                                                    {{validation.message}}
+                                                </mat-error>
+                                            </mat-error>
                                         </mat-form-field>
                                     </div>
                                     <div class="col-sm-4">
                                         <mat-form-field class="full-width-form-field" >
-                                            <input matInput type="password" formControlName="password" placeholder="Nueva Contraseña:">
-                                            <div *ngIf="validatingForm.controls['password'].errors && submitted">
-                                                <div class="alert alert-danger" *ngIf="validatingForm.controls['password'].errors.required">La contraseña es obligatoria</div>
-                                                <div class="alert alert-danger" *ngIf="validatingForm.controls['password'].errors.minlength">La contraseña debe tener al menos 6 caracteres</div>
-                                            </div>
+                                            <input matInput type="password" formControlName="password" placeholder="Nueva Contraseña:" required>
+                                            <mat-error *ngFor="let validation of validation_messages.password">
+                                                <mat-error *ngIf="(validatingForm.get('passwordsGroup').controls['password'].hasError(validation.type) && validatingForm.get('passwordsGroup').controls['password'].dirty || validatingForm.get('passwordsGroup').controls['password'].touched)">
+                                                    {{validation.message}}
+                                                </mat-error>
+                                            </mat-error>
                                         </mat-form-field>
                                     </div>
                                     <div class="col-sm-4">
                                         <mat-form-field class="full-width-form-field" >
-                                            <input matInput type="password" formControlName="password2" placeholder="Repetir nueva contraseña:">
-                                            <div *ngIf="validatingForm.controls['password2'].errors && submitted">
-                                                <div class="alert alert-danger" *ngIf="validatingForm.controls['password2'].errors.shouldMatch">Las contraseñas no coinciden</div>
-                                            </div>
+                                            <input matInput type="password" formControlName="password2" placeholder="Repetir nueva contraseña:" required>
+                                            <mat-error *ngFor="let validation of validation_messages.password2">
+                                                <mat-error *ngIf="(validatingForm.get('passwordsGroup').controls['password2'].hasError(validation.type) && validatingForm.get('passwordsGroup').controls['password2'].dirty || validatingForm.get('passwordsGroup').controls['password2'].touched)">
+                                                    {{validation.message}}
+                                                </mat-error>
+                                            </mat-error>
                                         </mat-form-field>
                                     </div>
                                 </div>
@@ -112,7 +120,7 @@
                             <button class="btn btn-sm btn-outline-danger" (click)="onClickRefresh()" [disabled]="validatingForm.pristine">
                                 <i class="fa fa-refresh ml-1"> Refrescar</i>
                             </button>
-                            <button class="btn btn-sm btn-outline-dark-green" (click)="onClickSave()" [disabled]="validatingForm.pristine">
+                            <button class="btn btn-sm btn-outline-dark-green" (click)="onClickSave()" [disabled]="validatingForm.pristine && validatingForm.valid">
                                 <i class="fa fa-save ml-1"> Grabar</i>
                             </button>
                             <button class="btn btn-sm btn-outline-dark-green" (click)="onClickChangePassword()">
