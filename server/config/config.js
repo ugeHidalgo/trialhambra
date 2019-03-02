@@ -17,7 +17,8 @@ module.exports = {
         credentials: true
     },
     db : {
-        uri : 'mongodb://localhost:27017/trialhambra', //DB on local computer
+        //uri : 'mongodb://localhost:27017/trialhambra', //DB on local computer
+        uri : 'mongodb://192.168.1.104:27017/trialhambra', //DB on local computer
         //uri : 'mongodb://ugeHidalgo:gunnar12A@ds149501.mlab.com:49501/windlogdb', //DB on mLab
         options: {},
         // Enable mongoose debug mode

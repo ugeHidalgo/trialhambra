@@ -81,8 +81,8 @@ export class UserComponent implements OnInit, OnChanges, ComponentCanDeactivate 
     const me = this;
 
     me.validatingForm = me.fb.group({
-      oldPassword: '',
-      password: ['', Validators.required ],
+      oldPassword: ['', Validators.required],
+      password: ['', [Validators.required, Validators.minLength(6)] ],
       password2: '',
       firstName: '',
       lastName: '',
@@ -94,6 +94,8 @@ export class UserComponent implements OnInit, OnChanges, ComponentCanDeactivate 
       admin: '',
       phone: '',
       mobile: ''
+    },{
+      validator: me.shouldMatch('password', 'password2')
     });
   }
 
@@ -148,4 +150,24 @@ export class UserComponent implements OnInit, OnChanges, ComponentCanDeactivate 
       });
   }
 
+  shouldMatch(controlName1: string, controlName2: string) {
+    return (formGroup: FormGroup) => {
+      const control1 = formGroup.controls[controlName1],
+            control2 = formGroup.controls[controlName2];
+
+      if (control1.errors) {
+        return;
+      }
+
+      if (control2.errors && !control2.errors.shouldMatch) {
+        return;
+      }
+
+      if (control1.value !== control2.value) {
+        control2.setErrors( {shouldMatch: true});
+      } else {
+        control2.setErrors(null);
+      }
+    }
+  }
 }
