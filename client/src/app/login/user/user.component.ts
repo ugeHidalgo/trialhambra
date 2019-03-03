@@ -102,13 +102,13 @@ export class UserComponent implements OnInit, OnChanges, ComponentCanDeactivate 
         validators: Validators.required,
         updateOn: 'blur'
       }),
-      password: new FormControl ('' , {
+      password: new FormControl ( '', {
         validators: Validators.compose([
           Validators.required,
           Validators.minLength(6)]),
         updateOn: 'blur'
       }),
-      password2: new FormControl ('' , {
+      password2: new FormControl ( '', {
         validators: Validators.required,
         updateOn: 'blur'
       })
@@ -191,11 +191,11 @@ export class UserComponent implements OnInit, OnChanges, ComponentCanDeactivate 
     const control1 = formGroup.controls[controlName1],
           control2 = formGroup.controls[controlName2];
 
-    if (control1.errors) {
+    if (!control1.pristine && control1.errors) {
       return;
     }
 
-    if (control2.errors && !control2.errors.areEqual) {
+    if (!control2.pristine && control2.errors && !control2.errors.areEqual) {
       return;
     }
 
