@@ -146,7 +146,7 @@ export class UserComponent implements OnInit, OnChanges, ComponentCanDeactivate 
       firstName: me.user.firstName,
       lastName: me.user.lastName,
       eMail: me.user.eMail,
-      birthDate: datePipe.transform(me.user.birthDate, format),
+      birthDate: me.user.birthDate,
       created: datePipe.transform(me.user.created, format),
       updated: datePipe.transform(me.user.updated, format),
       active: me.user.active,
