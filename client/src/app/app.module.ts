@@ -37,6 +37,7 @@ import { LoginComponent } from './login/login/login.component';
 import { RegisterComponent } from './login/register/register.component';
 import { UserComponent } from './login/user/user.component';
 import { DashboardComponent } from './dashboard/dashboard.component';
+import { MAT_DATE_LOCALE } from '@angular/material';
 
 
 @NgModule({
@@ -70,7 +71,7 @@ import { DashboardComponent } from './dashboard/dashboard.component';
     PendingChangesGuard,
     UserService,
     MessageService,
-    //{provide: ToastrOptions, useClass: ToastrCustomOptions },
+    {provide: MAT_DATE_LOCALE, useValue: 'es-ES' },
     GlobalsService
   ],
   bootstrap: [
