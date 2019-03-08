@@ -5,7 +5,7 @@ export class GlobalsService {
 
   userNameLogged: string;
   localStorageStore = 'currentUser';
-  server = 'http://192.168.1.104:3000/';  //To be used in production
+  server = 'http://192.168.1.25:3000/';  //To be used in production
   //server = 'http://localhost:3000/';  // To be used in development mode and without connection to any network
   monthlyIncomes = 10123;
   monthlyExpenses = 10323;

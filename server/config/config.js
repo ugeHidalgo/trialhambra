@@ -11,14 +11,14 @@ module.exports = {
     cors: { //Allow CORS for the given urls
         originsWhitelist: [
             'http://localhost:4200',      //My local front-end url for development.
-            'http://192.168.1.104:4200',  //Second CPU front-end url for development also.
+            'http://192.168.1.25:4200',  //Second CPU front-end url for development also.
             'http://www.myproductionurl.com' //My production front-end url.
         ],
         credentials: true
     },
     db : {
         //uri : 'mongodb://localhost:27017/trialhambra', //DB on local computer
-        uri : 'mongodb://192.168.1.104:27017/trialhambra', //DB on local computer
+        uri : 'mongodb://192.168.1.25:27017/trialhambra', //DB on local computer
         //uri : 'mongodb://ugeHidalgo:gunnar12A@ds149501.mlab.com:49501/windlogdb', //DB on mLab
         options: {},
         // Enable mongoose debug mode
