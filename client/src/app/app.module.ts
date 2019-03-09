@@ -32,12 +32,12 @@ import { MainFooterComponent } from './components/main/main-footer/main-footer.c
 import { DeleteDialogComponent } from './components/dialogs/delete-dialog/delete-dialog.component';
 import { SuccessDialogComponent } from './components/dialogs/success-dialog/success-dialog.component';
 import { ErrorDialogComponent } from './components/dialogs/error-dialog/error-dialog.component';
-import { config } from 'rxjs';
 import { LoginComponent } from './login/login/login.component';
 import { RegisterComponent } from './login/register/register.component';
 import { UserComponent } from './login/user/user.component';
 import { DashboardComponent } from './dashboard/dashboard.component';
 import { MAT_DATE_LOCALE } from '@angular/material';
+import { PasswordComponent } from './login/password/password.component';
 
 
 @NgModule({
@@ -53,7 +53,8 @@ import { MAT_DATE_LOCALE } from '@angular/material';
     LoginComponent,
     RegisterComponent,
     UserComponent,
-    DashboardComponent
+    DashboardComponent,
+    PasswordComponent
   ],
   imports: [
     BrowserModule,
@@ -65,6 +66,9 @@ import { MAT_DATE_LOCALE } from '@angular/material';
     ToastrModule.forRoot(new ToastrCustomOptions),
     MDBBootstrapModule.forRoot(),
     AppMaterialsModule,
+  ],
+  entryComponents: [
+    PasswordComponent
   ],
   providers: [
     AuthGuard,

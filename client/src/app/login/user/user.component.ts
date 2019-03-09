@@ -1,4 +1,4 @@
-import { Component, OnInit, HostBinding, OnChanges } from '@angular/core';
+import { Component, OnInit, HostBinding, OnChanges, ViewChild } from '@angular/core';
 import { Observable } from 'rxjs';
 import { Location, DatePipe } from '@angular/common';
 import { slideInDownAnimation } from '../../animations';
@@ -9,6 +9,8 @@ import { ComponentCanDeactivate } from '../../guards/pending-changes.guard';
 import { User } from '../../models/user.model';
 import { GlobalsService } from '../../globals/globals.service';
 import { UserService } from '../../services/user/user.service';
+import { PasswordComponent } from '../password/password.component';
+import { MDBModalRef, MDBModalService } from 'angular-bootstrap-md';
 
 @Component({
   selector: 'app-user',
@@ -16,6 +18,7 @@ import { UserService } from '../../services/user/user.service';
   styleUrls: ['./user.component.scss'],
   animations: [ slideInDownAnimation ]
 })
+
 export class UserComponent implements OnInit, OnChanges, ComponentCanDeactivate {
 
   @HostBinding('@routeAnimation') routeAnimation = true;
@@ -27,6 +30,7 @@ export class UserComponent implements OnInit, OnChanges, ComponentCanDeactivate 
   validatingForm: FormGroup;
   passwordsGroup: FormGroup;
   hidePasswordFields: boolean;
+  modalRef: MDBModalRef;
 
   validation_messages = {
     'oldPassword': [
@@ -47,6 +51,7 @@ export class UserComponent implements OnInit, OnChanges, ComponentCanDeactivate 
     protected globals: GlobalsService,
     private userService: UserService,
     private fb: FormBuilder,
+    private modalService: MDBModalService,
     public toastr: ToastrService) {
       const me = this;
       me.createForm();
@@ -76,7 +81,23 @@ export class UserComponent implements OnInit, OnChanges, ComponentCanDeactivate 
   }
 
   onClickChangePassword() {
-    this.hidePasswordFields = false;
+    const me = this,
+          modalOptions = {
+            backdrop: true,
+            keyboard: true,
+            focus: true,
+            show: false,
+            ignoreBackdropClick: false,
+            class: '',
+            containerClass: '',
+            animated: true,
+            data: {
+                user: this.user
+            }
+          };
+    //this.hidePasswordFields = false;
+    me.modalRef = me.modalService.show(PasswordComponent, modalOptions);
+    //this.passwordDialog.show();
   }
 
   onClickSave(): void {
