@@ -7,7 +7,18 @@ label {
 }
 
 .user-card {
-  width: 550px;
+  /* For mobile phones: */
+  width: 100%;
+
+  /* For tablets: */
+  @media only screen and (min-width: 600px) {
+      width: 80%;
+  }
+
+  /* For desktops: */
+  @media only screen and (min-width: 768px) {
+      width: 50%;
+  }
 }
 
 .card-up {

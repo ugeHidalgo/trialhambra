@@ -1,3 +1,18 @@
 label {
   padding-bottom: 10px;
 }
+
+.login-form {
+  /* For mobile phones: */
+  width: 100%;
+
+  /* For tablets: */
+  @media only screen and (min-width: 600px) {
+      width: 60%;
+  }
+
+  /* For desktops: */
+  @media only screen and (min-width: 768px) {
+      width: 40%;
+  }
+}
