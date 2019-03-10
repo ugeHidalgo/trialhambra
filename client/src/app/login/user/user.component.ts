@@ -1,6 +1,6 @@
 import { Component, OnInit, HostBinding, OnChanges, ViewChild } from '@angular/core';
 import { Observable } from 'rxjs';
-import { Location, DatePipe } from '@angular/common';
+import { DatePipe } from '@angular/common';
 import { slideInDownAnimation } from '../../animations';
 import { FormBuilder, FormGroup, Validators, FormControl } from '@angular/forms';
 import { ToastrService } from 'ngx-toastr';
@@ -28,40 +28,21 @@ export class UserComponent implements OnInit, OnChanges, ComponentCanDeactivate 
   user: User;
   username: string;
   validatingForm: FormGroup;
-  passwordsGroup: FormGroup;
-  hidePasswordFields: boolean;
   modalRef: MDBModalRef;
 
-  validation_messages = {
-    'oldPassword': [
-      { type: 'required', message: 'La contraseña actual es obligatoria.'}
-    ],
-    'password': [
-      { type: 'required', message: 'La contraseña nueva es obligatoria.'},
-      { type: 'minlength', message: 'La contraseña debe tener un mínimo de seis caracteres.'}
-    ],
-    'password2': [
-      { type: 'required', message: 'Es obligatorio reescribir la nueva contraseña.'},
-      { type: 'areEqual', message: 'Las contraseñas deben ser iguales'}
-    ]
-  }
-
   constructor(
-    private location: Location,
     protected globals: GlobalsService,
     private userService: UserService,
     private fb: FormBuilder,
     private modalService: MDBModalService,
     public toastr: ToastrService) {
-      const me = this;
-      me.createForm();
+      this.createForm();
   }
 
   ngOnInit() {
     const me = this;
     me.username = me.globals.userNameLogged;
     me.getLoggedUser(me.username);
-    me.hidePasswordFields = true;
   }
 
   ngOnChanges() {
@@ -74,10 +55,7 @@ export class UserComponent implements OnInit, OnChanges, ComponentCanDeactivate 
 
   // Buttons actions
   onClickRefresh() {
-    const me = this;
-
-    me.rebuildForm();
-    me.hidePasswordFields = true;
+    this.rebuildForm();
   }
 
   onClickChangePassword() {
@@ -92,12 +70,10 @@ export class UserComponent implements OnInit, OnChanges, ComponentCanDeactivate 
             containerClass: '',
             animated: true,
             data: {
-                user: this.user
+                user: me.user
             }
           };
-    //this.hidePasswordFields = false;
     me.modalRef = me.modalService.show(PasswordComponent, modalOptions);
-    //this.passwordDialog.show();
   }
 
   onClickSave(): void {
@@ -118,26 +94,7 @@ export class UserComponent implements OnInit, OnChanges, ComponentCanDeactivate 
   createForm() {
     const me = this;
 
-    me.passwordsGroup = new FormGroup({
-      oldPassword: new FormControl ( '',  {
-        validators: Validators.required,
-        updateOn: 'blur'
-      }),
-      password: new FormControl ( '', {
-        validators: Validators.compose([
-          Validators.required,
-          Validators.minLength(6)]),
-        updateOn: 'blur'
-      }),
-      password2: new FormControl ( '', {
-        validators: Validators.required,
-        updateOn: 'blur'
-      })
-    }, (formGroup: FormGroup) => {
-      return this.areEqual(formGroup, "password", "password2")
-    });
-
-    me.validatingForm = this.fb.group({
+    me.validatingForm = me.fb.group({
       firstName: new FormControl ('' , {}),
       lastName: new FormControl ('' , {}),
       eMail: new FormControl ('' , {}),
@@ -147,8 +104,7 @@ export class UserComponent implements OnInit, OnChanges, ComponentCanDeactivate 
       active: new FormControl ('' , {}),
       admin: new FormControl ('' , {}),
       phone: new FormControl ('' , {}),
-      mobile: new FormControl ('' , {}),
-      passwordsGroup: me.passwordsGroup
+      mobile: new FormControl ('' , {})
     });
   }
 
@@ -156,12 +112,6 @@ export class UserComponent implements OnInit, OnChanges, ComponentCanDeactivate 
     const me = this,
           datePipe = new DatePipe(navigator.language),
           format = 'dd/MM/yyyy';
-
-    me.passwordsGroup.reset({
-      oldPassword: '',
-      password: me.user.password,
-      password2: '',
-    });
 
     me.validatingForm.reset({
       firstName: me.user.firstName,
@@ -206,26 +156,5 @@ export class UserComponent implements OnInit, OnChanges, ComponentCanDeactivate 
           me.user = user;
           me.rebuildForm();
       });
-  }
-
-  areEqual(formGroup: FormGroup, controlName1: string, controlName2: string) {
-    const control1 = formGroup.controls[controlName1],
-          control2 = formGroup.controls[controlName2];
-
-    if (!control1.pristine && control1.errors) {
-      return;
-    }
-
-    if (!control2.pristine && control2.errors && !control2.errors.areEqual) {
-      return;
-    }
-
-    if (control1.value !== control2.value) {
-      control2.setErrors( {areEqual: true});
-      return {areEqual: true}
-    } else {
-      control2.setErrors(null);
-      return null;
-    }
   }
 }
