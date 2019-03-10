@@ -2,6 +2,7 @@ import { Component, ViewChild } from '@angular/core';
 import { MDBModalRef, ModalDirective } from 'angular-bootstrap-md';
 import { User } from 'src/app/models/user.model';
 import { FormGroup, FormControl, Validators } from '@angular/forms';
+import { Subject } from 'rxjs';
 
 @Component({
   selector: 'app-password',
@@ -13,6 +14,7 @@ export class PasswordComponent {
   @ViewChild('passwordDialog') passwordDialog: ModalDirective;
 
   passwordsForm: FormGroup;
+  action: Subject<any> = new Subject();
 
   validation_messages = {
     'oldPassword': [
@@ -76,7 +78,11 @@ export class PasswordComponent {
     }
   }
 
-  save() {
-    console.log('saving');
+  onChangePassword() {
+    const me = this;
+
+    if (!me.passwordsForm.invalid) {
+      me.action.next(me.passwordsForm.value.password);
+    }
   }
 }

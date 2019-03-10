@@ -28,7 +28,7 @@ export class UserComponent implements OnInit, OnChanges, ComponentCanDeactivate 
   user: User;
   username: string;
   validatingForm: FormGroup;
-  modalRef: MDBModalRef;
+  passwordDialogRef: MDBModalRef;
 
   constructor(
     protected globals: GlobalsService,
@@ -73,7 +73,13 @@ export class UserComponent implements OnInit, OnChanges, ComponentCanDeactivate 
                 user: me.user
             }
           };
-    me.modalRef = me.modalService.show(PasswordComponent, modalOptions);
+    me.passwordDialogRef = me.modalService.show(PasswordComponent, modalOptions);
+    me.passwordDialogRef.content.action.subscribe(
+      (newPassword: any) => {
+        console.log(newPassword);
+        me.passwordDialogRef.hide();
+      }
+    );
   }
 
   onClickSave(): void {
