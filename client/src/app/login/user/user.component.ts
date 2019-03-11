@@ -29,6 +29,7 @@ export class UserComponent implements OnInit, OnChanges, ComponentCanDeactivate 
   username: string;
   validatingForm: FormGroup;
   passwordDialogRef: MDBModalRef;
+  hasChangedPassword : boolean = false;
 
   constructor(
     protected globals: GlobalsService,
@@ -41,6 +42,8 @@ export class UserComponent implements OnInit, OnChanges, ComponentCanDeactivate 
 
   ngOnInit() {
     const me = this;
+
+    me.hasChangedPassword = false;
     me.username = me.globals.userNameLogged;
     me.getLoggedUser(me.username);
   }
@@ -50,12 +53,18 @@ export class UserComponent implements OnInit, OnChanges, ComponentCanDeactivate 
   }
 
   canDeactivate(): Observable<boolean> | boolean {
-    return this.validatingForm.pristine;
+    const me = this;
+
+    return me.validatingForm.pristine && !me.hasChangedPassword;
   }
 
   // Buttons actions
   onClickRefresh() {
-    this.rebuildForm();
+    const me = this;
+
+    me.user.password = '';
+    me.hasChangedPassword = false;
+    me.rebuildForm();
   }
 
   onClickChangePassword() {
@@ -76,7 +85,8 @@ export class UserComponent implements OnInit, OnChanges, ComponentCanDeactivate 
     me.passwordDialogRef = me.modalService.show(PasswordComponent, modalOptions);
     me.passwordDialogRef.content.action.subscribe(
       (newPassword: any) => {
-        console.log(newPassword);
+        me.user.password = newPassword;
+        me.hasChangedPassword = true;
         me.passwordDialogRef.hide();
       }
     );

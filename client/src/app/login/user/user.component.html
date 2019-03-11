@@ -85,7 +85,7 @@
                         </form>
                     </mdb-card-body>
                     <div class="card-footer">
-                            <button class="btn btn-sm btn-outline-danger" (click)="onClickRefresh()" [disabled]="!validatingForm.dirty">
+                            <button class="btn btn-sm btn-outline-danger" (click)="onClickRefresh()" [disabled]="!validatingForm.dirty && user.password === ''">
                                 <i class="fa fa-refresh ml-1"> Refrescar</i>
                             </button>
                             <button class="btn btn-sm btn-outline-dark-green" type="submit" (click)="onClickSave()" [disabled]="validatingForm.invalid">
