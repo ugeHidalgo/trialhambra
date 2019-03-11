@@ -27,6 +27,7 @@ export class UserComponent implements OnInit, OnChanges, ComponentCanDeactivate 
 
   user: User;
   username: string;
+  password: string;
   validatingForm: FormGroup;
   passwordDialogRef: MDBModalRef;
   hasChangedPassword : boolean = false;
@@ -86,6 +87,7 @@ export class UserComponent implements OnInit, OnChanges, ComponentCanDeactivate 
     me.passwordDialogRef.content.action.subscribe(
       (newPassword: any) => {
         me.user.password = newPassword;
+        me.password = newPassword;
         me.hasChangedPassword = true;
         me.passwordDialogRef.hide();
       }
@@ -98,6 +100,7 @@ export class UserComponent implements OnInit, OnChanges, ComponentCanDeactivate 
     if (me.validatingForm.invalid) return;
 
     me.user = this.getFormData();
+    me.user.password = me.password;
     me.userService.updateUser(me.user)
       .subscribe( () => {
           me.toastr.success('Successfully saved.');

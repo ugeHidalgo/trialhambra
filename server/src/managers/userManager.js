@@ -66,7 +66,8 @@ function createNewUser (user, callbackFn){
 
 function updateExistingUser (user, callbackFn) {
 
-    var updatedValues = {
+    var salt = hasher.createSalt(),
+        updatedValues = {
         firstName: user.firstName,
         lastName: user.lastName,
         eMail: user.eMail,
@@ -77,6 +78,11 @@ function updateExistingUser (user, callbackFn) {
         phone: user.phone,
         mobile: user.mobile
     };
+
+    if (user.password !== ''){
+        updatedValues.password = hasher.computeHash(user.password, salt);
+        updatedValues.salt = salt;
+    }
 
     User.findOneAndUpdate(
     {_id: user._id},
