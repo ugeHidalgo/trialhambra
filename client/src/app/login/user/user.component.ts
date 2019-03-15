@@ -46,6 +46,7 @@ export class UserComponent implements OnInit, OnChanges, ComponentCanDeactivate 
 
     me.hasChangedPassword = false;
     me.username = me.globals.userNameLogged;
+    me.password = '';
     me.getLoggedUser(me.username);
   }
 
@@ -103,10 +104,13 @@ export class UserComponent implements OnInit, OnChanges, ComponentCanDeactivate 
     me.user.password = me.password;
     me.userService.updateUser(me.user)
       .subscribe( () => {
+          me.user.password = '';
+          me.hasChangedPassword = false;
+          me.rebuildForm();
           me.toastr.success('Successfully saved.');
         }
       );
-    me.rebuildForm();
+
   }
 
   // FormModel Methods
@@ -130,15 +134,16 @@ export class UserComponent implements OnInit, OnChanges, ComponentCanDeactivate 
   rebuildForm() {
     const me = this,
           datePipe = new DatePipe(navigator.language),
-          format = 'dd/MM/yyyy';
+          format1 = 'dd/MM/yyyy',
+          format2 = 'MM/dd/yyyy';
 
     me.validatingForm.reset({
       firstName: me.user.firstName,
       lastName: me.user.lastName,
       eMail: me.user.eMail,
       birthDate: me.user.birthDate,
-      created: datePipe.transform(me.user.created, format),
-      updated: datePipe.transform(me.user.updated, format),
+      created: datePipe.transform(me.user.created, format1),
+      updated: datePipe.transform(me.user.updated, format2),
       active: me.user.active,
       admin: me.user.admin,
       phone: me.user.phone,
