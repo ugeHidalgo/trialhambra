@@ -18,7 +18,8 @@ export class PasswordComponent {
 
   validation_messages = {
     'oldPassword': [
-      { type: 'required', message: 'La contraseña actual es obligatoria.'}
+      { type: 'required', message: 'La contraseña actual es obligatoria.'},
+      { type: 'wrongPassword', message: 'La contraseña actual no es correcta.'}
     ],
     'password': [
       { type: 'required', message: 'La contraseña nueva es obligatoria.'},
@@ -39,7 +40,7 @@ export class PasswordComponent {
 
     me.passwordsForm = new FormGroup({
       oldPassword: new FormControl ( '',  {
-        validators: Validators.required,
+        validators: Validators.compose([Validators.required, this.correctPassword]),
         updateOn: 'blur'
       }),
       password: new FormControl ( '', {
@@ -55,6 +56,16 @@ export class PasswordComponent {
     }, (formGroup: FormGroup) => {
       return this.areEqual(formGroup, "password", "password2")
     });
+  }
+
+  correctPassword(oldPasswordControl: FormControl) {
+    if (oldPasswordControl.value !== '') {
+      //Todo call service to check passwod.
+      oldPasswordControl.setErrors( {wrongPassword: true});
+      return {wrongPassword: true};
+    } else {
+      return null;
+    }
   }
 
   areEqual(formGroup: FormGroup, controlName1: string, controlName2: string) {
