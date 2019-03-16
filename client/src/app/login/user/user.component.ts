@@ -134,16 +134,15 @@ export class UserComponent implements OnInit, OnChanges, ComponentCanDeactivate 
   rebuildForm() {
     const me = this,
           datePipe = new DatePipe(navigator.language),
-          format1 = 'dd/MM/yyyy',
-          format2 = 'MM/dd/yyyy';
+          format = 'MMM d, y';
 
     me.validatingForm.reset({
       firstName: me.user.firstName,
       lastName: me.user.lastName,
       eMail: me.user.eMail,
       birthDate: me.user.birthDate,
-      created: datePipe.transform(me.user.created, format1),
-      updated: datePipe.transform(me.user.updated, format2),
+       created: datePipe.transform(me.user.created, format),
+      updated: datePipe.transform(me.user.updated, format),
       active: me.user.active,
       admin: me.user.admin,
       phone: me.user.phone,
