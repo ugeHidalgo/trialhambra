@@ -38,6 +38,7 @@ import { UserComponent } from './login/user/user.component';
 import { DashboardComponent } from './dashboard/dashboard.component';
 import { MAT_DATE_LOCALE } from '@angular/material';
 import { PasswordComponent } from './login/password/password.component';
+import { ForgotPasswordComponent } from './login/forgot-password/forgot-password.component';
 
 
 @NgModule({
@@ -54,7 +55,8 @@ import { PasswordComponent } from './login/password/password.component';
     RegisterComponent,
     UserComponent,
     DashboardComponent,
-    PasswordComponent
+    PasswordComponent,
+    ForgotPasswordComponent
   ],
   imports: [
     BrowserModule,

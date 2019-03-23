@@ -7,10 +7,12 @@ import { PendingChangesGuard } from '../guards/pending-changes.guard';
 import { LoginComponent } from './login/login.component';
 import { RegisterComponent } from './register/register.component';
 import { UserComponent } from './user/user.component';
+import { ForgotPasswordComponent } from './forgot-password/forgot-password.component';
 
 const loginRoutes: Routes = [
     { path: 'login', component: LoginComponent },
     { path: 'register', component: RegisterComponent },
+    { path: 'forgot', component: ForgotPasswordComponent },
     { path: 'user', component: UserComponent, canActivate: [AuthGuard], canDeactivate: [PendingChangesGuard] }
 ];
 

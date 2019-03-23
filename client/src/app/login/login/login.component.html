@@ -39,7 +39,7 @@
             <div class="modal-footer">
                 <div class="options text-center text-md-right mt-1">
                     <p>¿No tienes cuenta? <a [routerLink]="['/register']">Registro</a></p>
-                    <p>¿Olvidaste la <a href="#">contraseña?</a></p>
+                    <p>¿Olvidaste la <a [routerLink]="['/forgot']">contraseña?</a></p>
                 </div>
                 <button type="button" class="btn btn-outline-info ml-auto" data-dismiss="modal"
                     (click)="form.hide()" [routerLink]="['/']" mdbRippleRadius>Cerrar
