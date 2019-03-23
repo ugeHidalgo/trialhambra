@@ -1,5 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { FormGroup, FormControl, Validators } from '@angular/forms';
+import { ToastrService } from 'ngx-toastr';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-forgot-password',
@@ -26,7 +28,7 @@ export class ForgotPasswordComponent implements OnInit {
     this.email = "";
   }
 
-  constructor() {
+  constructor(private router: Router, public toastr: ToastrService,) {
     this.createForm();
   }
 
@@ -58,9 +60,34 @@ export class ForgotPasswordComponent implements OnInit {
 
   onResetPassword() {
     const me = this;
+    let sentTo: string = '';
 
+    me.getFormData();
+    sentTo = me.setMessageReciever();
     if (!me.forgotForm.invalid) {
+      //Send password if username or email exist on database.
+
+      me.toastr.success(`Hemos enviado un correo a${sentTo} (si existe en nuestra base de datos) con una nueva contraseña.`);
+      me.router.navigate(['/login']);
     }
+  }
+
+  getFormData = (): any => {
+    const me = this,
+          formModel = me.forgotForm.value;
+
+    me.username = formModel.username;
+    me.email = formModel.email;
+  }
+
+  setMessageReciever(): string {
+    const me = this;
+
+    if (me.username !== ''){
+      return `l usuario  ${me.username}`;
+    }
+
+    return ` ${me.email}`;
   }
 
 }
