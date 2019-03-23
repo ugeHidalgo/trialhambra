@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { FormGroup, FormControl, Validators } from '@angular/forms';
 
 @Component({
   selector: 'app-forgot-password',
@@ -7,13 +8,59 @@ import { Component, OnInit } from '@angular/core';
 })
 export class ForgotPasswordComponent implements OnInit {
 
-  model: any = {};
+  forgotForm: FormGroup;
+  username: string = "";
+  email: string = "";
 
-  constructor() { }
+  validation_messages = {
+    'username': [
+      { type: 'onerequired', message: 'Debe introducir al menos un username o un email.'}
+    ],
+    'email': [
+      { type: 'onerequired', message: 'Debe introducir al menos un username o un email.'}
+    ]
+  }
 
   ngOnInit() {
-    this.model.username = "";
-    this.model.email = "";
+    this.username = "";
+    this.email = "";
+  }
+
+  constructor() {
+    this.createForm();
+  }
+
+  createForm() {
+    const me = this;
+
+    me.forgotForm = new FormGroup({
+      username: new FormControl ( '', {}),
+      email: new FormControl ( '', {})
+    }, (formGroup: FormGroup) => {
+      return this.oneAtLeastEntered(formGroup, "username", "email")
+    });
+  }
+
+  oneAtLeastEntered(formGroup: FormGroup, controlName1: string, controlName2: string) {
+    const control1 = formGroup.controls[controlName1],
+          control2 = formGroup.controls[controlName2];
+
+    if (control1.value === "" && control2.value === "") {
+      control1.setErrors( {onerequired: true});
+      control2.setErrors( {onerequired: true});
+      return {onerequiredareEqual: true}
+    }
+
+    control1.setErrors(null);
+    control2.setErrors(null);
+    return null;
+  }
+
+  onResetPassword() {
+    const me = this;
+
+    if (!me.forgotForm.invalid) {
+    }
   }
 
 }
