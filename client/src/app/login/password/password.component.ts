@@ -1,6 +1,5 @@
 import { Component, ViewChild } from '@angular/core';
 import { MDBModalRef, ModalDirective } from 'angular-bootstrap-md';
-import { User } from 'src/app/models/user.model';
 import { FormGroup, FormControl, Validators } from '@angular/forms';
 import { Subject } from 'rxjs';
 
@@ -17,10 +16,6 @@ export class PasswordComponent {
   action: Subject<any> = new Subject();
 
   validation_messages = {
-    'oldPassword': [
-      { type: 'required', message: 'La contraseña actual es obligatoria.'},
-      { type: 'wrongPassword', message: 'La contraseña actual no es correcta.'}
-    ],
     'password': [
       { type: 'required', message: 'La contraseña nueva es obligatoria.'},
       { type: 'minlength', message: 'La contraseña debe tener un mínimo de seis caracteres.'}
@@ -39,10 +34,6 @@ export class PasswordComponent {
     const me = this;
 
     me.passwordsForm = new FormGroup({
-      oldPassword: new FormControl ( '',  {
-        validators: Validators.compose([Validators.required, this.correctPassword]),
-        updateOn: 'blur'
-      }),
       password: new FormControl ( '', {
         validators: Validators.compose([
           Validators.required,
@@ -56,16 +47,6 @@ export class PasswordComponent {
     }, (formGroup: FormGroup) => {
       return this.areEqual(formGroup, "password", "password2")
     });
-  }
-
-  correctPassword(oldPasswordControl: FormControl) {
-    if (oldPasswordControl.value !== '') {
-      //Todo call service to check passwod.
-      oldPasswordControl.setErrors( {wrongPassword: true});
-      return {wrongPassword: true};
-    } else {
-      return null;
-    }
   }
 
   areEqual(formGroup: FormGroup, controlName1: string, controlName2: string) {
