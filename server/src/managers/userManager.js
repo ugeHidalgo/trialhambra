@@ -36,6 +36,27 @@ module.exports.updateUser = function (user, callbackFn) {
     }
 };
 
+module.exports.updateUserPassword = function (username, password, callbackFn) {
+
+    var salt = hasher.createSalt(),
+        updatedValues = {
+            password: hasher.computeHash(password, salt),
+            salt: salt
+         };
+
+    User.findOneAndUpdate(
+    {username: username},
+    { $set: updatedValues },
+    function (error){
+        if (error){
+            callbackFn(error, false);
+        } else {
+            console.log ('Password updated for username ' + username);
+            callbackFn(null, true)
+        }
+    });
+};
+
 
 /**
  * Private methods.

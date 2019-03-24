@@ -95,14 +95,16 @@ export class RecoverPasswordComponent implements OnInit {
   onChangePassword() {
     const me = this;
 
+    me.password = me.passwordsForm.value.password;
     if (!me.passwordsForm.invalid) {
       me.saveNewPassword();
     }
   }
+
   saveNewPassword(): any {
     const me = this;
 
-    me.userService.updateUserPassword(me.username, me.hashedPassword)
+    me.userService.updateUserPassword(me.username, me.password)
       .subscribe( result => {
           if (result) {
             me.router.navigate(['/login']);
