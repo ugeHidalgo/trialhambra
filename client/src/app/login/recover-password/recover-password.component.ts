@@ -1,6 +1,8 @@
 import { Component, OnInit } from '@angular/core';
-import { ActivatedRoute } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 import { FormGroup, FormControl, Validators } from '@angular/forms';
+import { ToastrService } from 'ngx-toastr';
+import { UserService } from 'src/app/services/user/user.service';
 
 @Component({
   selector: 'app-recover-password',
@@ -27,7 +29,11 @@ export class RecoverPasswordComponent implements OnInit {
     ]
   }
 
-  constructor(private route: ActivatedRoute) {
+  constructor(
+    private router: Router,
+    private route: ActivatedRoute,
+    public toastr: ToastrService,
+    private userService: UserService) {
     this.createForm();
   }
 
@@ -38,6 +44,12 @@ export class RecoverPasswordComponent implements OnInit {
     me.hashedPassword = me.route.snapshot.paramMap.get('p');
     me.password = '';
     me.password2 = '';
+
+    //Check if hashedPassword is correct. If not go to login page again.
+    if (me.hashedPassword === '*' ){
+      me.router.navigate(['/login']);
+      me.toastr.error('Un problema impidió recuperar la contraseña. Por favor, inténtelo de nuevo.');
+    }
   }
 
   createForm() {
@@ -84,8 +96,21 @@ export class RecoverPasswordComponent implements OnInit {
     const me = this;
 
     if (!me.passwordsForm.invalid) {
-      //Save new password and go to login screen
+      me.saveNewPassword();
     }
+  }
+  saveNewPassword(): any {
+    const me = this;
+
+    me.userService.updateUserPassword(me.username, me.hashedPassword)
+      .subscribe( result => {
+          if (result) {
+            me.router.navigate(['/login']);
+            me.toastr.success('Contraseña actualizada correctamente.');
+          } else {
+            me.toastr.error('Un problema impidió recuperar la contraseña. Por favor, inténtelo de nuevo.');
+          }
+      });
   }
 
 }

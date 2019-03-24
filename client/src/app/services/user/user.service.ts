@@ -30,6 +30,14 @@ export class UserService {
   }
 
   /**.*/
+  updateUserPassword(userName: string, hashedPassword: string): Observable<boolean> {
+    const me = this,
+          updateUserPasswordUrl = `${me.userUrl}/?username=${userName}`;
+
+    return me.http.post<any>(updateUserPasswordUrl, hashedPassword);
+  }
+
+  /**.*/
   updateUser(user: User): Observable<User> {
     const me = this,
           httpOptions = me.createHttpOptionsWithToken();
