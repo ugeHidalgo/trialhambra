@@ -45,7 +45,7 @@ export class RecoverPasswordComponent implements OnInit {
     me.password = '';
     me.password2 = '';
 
-    //Check if hashedPassword is correct. If not go to login page again.
+    //Todo: Check if hashedPassword is correct. If not go to login page again.
     if (me.hashedPassword === '*' ){
       me.router.navigate(['/login']);
       me.toastr.error('Un problema impidió recuperar la contraseña. Por favor, inténtelo de nuevo.');

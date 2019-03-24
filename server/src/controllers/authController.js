@@ -13,6 +13,16 @@ var url = require ('url'),
  */
 module.exports.init = function (app) {
 
+    // Send a password recovery mail to the user.
+    // (POST)http:localhost:3000/api/user/userrecover body: {firstName: 'a name', username:'ugeHidalgo', ...}
+    app.post('/api/user/userrecover', function(request, response, next){
+
+        var userToRecover =  request.body;
+
+        //Call here method used to send mail.
+        response.status(201).send(userToRecover);
+    });
+
     // Updates an user password.
     // (POST)http:localhost:3000/api/username body: {password: 'kahdakjsh'}
     app.post('/api/user/:username', function(request, response, next){
