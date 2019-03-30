@@ -5,8 +5,28 @@
  * Module dependencies.
  */
 var url = require ('url'),
+    nodemailer = require('nodemailer'),
+    smtpTransport = require('nodemailer-smtp-transport'),
     userManager = require('../managers/userManager'),
-    auth = require ('../auth/authMiddleware');
+    auth = require ('../auth/authMiddleware'),
+
+    transporter = nodemailer.createTransport(smtpTransport({
+        service: 'gmail',
+        host: 'smtp.gmail.com',
+        port: 465,
+        secure: true,
+        auth: {
+            user: 'trialhambranoreply@gmail.com',
+            pass: 'trialhambra12A.g'
+        }
+    })),
+
+    mailOptions = {
+        from: 'trialhambranoreply@gmail.com',
+        to: 'ugehidalgo@gmail.com',
+        subject: 'Sending Email using Node.js',
+        text: 'That was easy!'
+    };
 
 /**
  * Public methods.
@@ -19,8 +39,15 @@ module.exports.init = function (app) {
 
         var userToRecover =  request.body;
 
-        //Call here method used to send mail.
-        response.status(201).send(userToRecover);
+        transporter.sendMail(mailOptions, function(error, info){
+            if (error) {
+              console.log(error);
+              response.status(400).send(error);
+            } else {
+              console.log('Email sent to : ' + userToRecover + '. Info:' + info.response);
+              response.status(201).send(info.response);
+            }
+          });
     });
 
     // Updates an user password.

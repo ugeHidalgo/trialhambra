@@ -113,3 +113,6 @@ To get more help on the Angular CLI use `ng help` or go check out the [Angular C
 sudo mongodump --db mowizz --out /Users/ugeHidalgo/Documents/mowizz/backups/
 
 sudo mongorestore --db mowizz --drop /Users/ugeHidalgo/Documents/mowizz/backups/mowizz
+
+##NoReply email setup
+https://stackoverflow.com/questions/19877246/nodemailer-with-gmail-and-nodejs#27160641

@@ -28,6 +28,8 @@
     "lodash": "^4.17.11",
     "method-override": "^2.3.10",
     "mongoose": "^5.3.4",
+    "nodemailer": "^6.0.0",
+    "nodemailer-smtp-transport": "^2.7.4",
     "npm": "^6.4.1",
     "request": "^2.88.0",
     "vash": "^0.12.4"

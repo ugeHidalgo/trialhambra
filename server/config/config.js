@@ -45,5 +45,9 @@ module.exports = {
     },
     sessionKey: 'sessionId',
     sessionSecret: process.env.SESSION_SECRET || 'anystringhereisvalidtoencript',
-    sessionJsonWebTokenExpires: '10h'
+    sessionJsonWebTokenExpires: '10h',
+    recoveryMail: {
+        account: 'trialhambranoreply@gmail.com',
+        password: 'trialhambra12A.'
+    }
 };
