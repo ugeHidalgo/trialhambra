@@ -47,7 +47,12 @@ module.exports = {
     sessionSecret: process.env.SESSION_SECRET || 'anystringhereisvalidtoencript',
     sessionJsonWebTokenExpires: '10h',
     recoveryMail: {
-        account: 'trialhambranoreply@gmail.com',
-        password: 'trialhambra12A.'
+        service: 'gmail',
+        host: 'smtp.gmail.com',
+        port: 465,
+        secure: true,
+        user: 'trialhambranoreply@gmail.com',
+        pass: 'trialhambra12A.g',
+        subject: 'Correo de recuperación de cuenta triAlhambra'
     }
 };

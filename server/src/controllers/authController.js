@@ -4,27 +4,27 @@
 /**
  * Module dependencies.
  */
-var url = require ('url'),
+var config = require('../../config/config'),
     nodemailer = require('nodemailer'),
     smtpTransport = require('nodemailer-smtp-transport'),
     userManager = require('../managers/userManager'),
     auth = require ('../auth/authMiddleware'),
 
     transporter = nodemailer.createTransport(smtpTransport({
-        service: 'gmail',
-        host: 'smtp.gmail.com',
-        port: 465,
-        secure: true,
+        service: config.recoveryMail.service,
+        host: config.recoveryMail.host,
+        port: config.recoveryMail.port,
+        secure: config.recoveryMail.secure,
         auth: {
-            user: 'trialhambranoreply@gmail.com',
-            pass: 'trialhambra12A.g'
+            user: config.recoveryMail.user,
+            pass: config.recoveryMail.pass
         }
     })),
 
     mailOptions = {
-        from: 'trialhambranoreply@gmail.com',
+        from: config.recoveryMail.user,
         to: 'ugehidalgo@gmail.com',
-        subject: 'Sending Email using Node.js',
+        subject: config.recoveryMail.subject,
         text: 'That was easy!'
     };
 
@@ -37,15 +37,16 @@ module.exports.init = function (app) {
     // (POST)http:localhost:3000/api/user/userrecover body: {firstName: 'a name', username:'ugeHidalgo', ...}
     app.post('/api/user/userrecover', function(request, response, next){
 
-        var userToRecover =  request.body;
+        var userToRecover =  request.body.username;
 
         transporter.sendMail(mailOptions, function(error, info){
             if (error) {
               console.log(error);
-              response.status(400).send(error);
+              response.status(400).send(false);
             } else {
               console.log('Email sent to : ' + userToRecover + '. Info:' + info.response);
-              response.status(201).send(info.response);
+              response.set('Content-Type','text/html');
+              response.status(201).send(true);
             }
           });
     });

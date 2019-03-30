@@ -30,8 +30,8 @@ export class UserService {
   }
 
   /**.*/
-  sendUserPasswordRecoverMail(user: User): Observable<User> {
-    return this.http.post<User>(this.userUrl + '/userrecover', user);
+  sendUserPasswordRecoverMail(user: User): Observable<boolean> {
+    return this.http.post<boolean>(this.userUrl + '/userrecover', user);
   }
 
   /**.*/
