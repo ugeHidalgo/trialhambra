@@ -25,7 +25,7 @@ var config = require('../../config/config'),
         from: config.recoveryMail.user,
         to: 'ugehidalgo@gmail.com',
         subject: config.recoveryMail.subject,
-        text: 'That was easy!'
+        text: 'Usa el siguiente enlace para recuperar tu cuenta: '
     };
 
 /**
@@ -38,6 +38,8 @@ module.exports.init = function (app) {
     app.post('/api/user/userrecover', function(request, response, next){
 
         var userToRecover =  request.body.username;
+
+        mailOptions.text += 'http://192.168.1.25:4200/recover/testuser/pass'
 
         transporter.sendMail(mailOptions, function(error, info){
             if (error) {
