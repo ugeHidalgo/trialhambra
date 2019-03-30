@@ -37,20 +37,25 @@ module.exports.init = function (app) {
     // (POST)http:localhost:3000/api/user/userrecover body: {firstName: 'a name', username:'ugeHidalgo', ...}
     app.post('/api/user/userrecover', function(request, response, next){
 
-        var userToRecover =  request.body.username;
+        var userToRecover =  request.body.username,
+            mailToRecover = request.body.email,
+            userPass = '';
 
-        mailOptions.text += 'http://192.168.1.25:4200/recover/testuser/pass'
-
-        transporter.sendMail(mailOptions, function(error, info){
-            if (error) {
-              console.log(error);
-              response.status(400).send(false);
-            } else {
-              console.log('Email sent to : ' + userToRecover + '. Info:' + info.response);
-              response.set('Content-Type','text/html');
-              response.status(201).send(true);
-            }
-          });
+        if (userToRecover !== ''){
+            userManager.getUserByUserName(userToRecover, function (error, user) {
+                if (!error) {
+                    userPass = user[0].password;
+                    sendMailToRecover(response, userToRecover, userPass);
+                }
+            });
+        } else {
+            userManager.getUserByUserMail(mailToRecover,sendMailToRecover(response, function (error, user) {
+                if (!error) {
+                    userPass = user[0].password;
+                    sendMailToRecover(response, userToRecover, userPass);
+                }
+            }));
+        }
     });
 
     // Updates an user password.
@@ -109,4 +114,35 @@ module.exports.init = function (app) {
     });
 
     console.log('Auth controller initialized');
+
+    /**
+     * Private methods.
+     */
+    function sendMailToRecover (response, userToRecover, userPass) {
+
+        mailOptions.text += prepareRecoveryUrl(userToRecover, userPass);
+
+        transporter.sendMail(mailOptions, function(error, info){
+            if (error) {
+              console.log(error);
+              response.status(400).send(false);
+            } else {
+              console.log('Email sent to : ' + userToRecover + '. Info:' + info.response);
+              response.set('Content-Type','text/html');
+              response.status(201).send(true);
+            }
+          });
+    }
+
+    function prepareRecoveryUrl (userToRecover, userPass) {
+        var url = config.recoveryMail.recoveryUrl;
+
+        if (userToRecover !== '') {
+            url += userToRecover + '/' + userPass;
+        } else {
+
+        }
+
+        return url;
+    }
 };

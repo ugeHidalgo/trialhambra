@@ -55,7 +55,7 @@ export class ForgotPasswordComponent implements OnInit {
     if (control1.value === "" && control2.value === "") {
       control1.setErrors( {onerequired: true});
       control2.setErrors( {onerequired: true});
-      return {onerequiredareEqual: true}
+      return {onerequired: true}
     }
 
     control1.setErrors(null);
@@ -74,9 +74,8 @@ export class ForgotPasswordComponent implements OnInit {
     user.eMail = me.email;
 
     if (!me.forgotForm.invalid) {
-      //Send password if username or email exist on database.
       me.userService.sendUserPasswordRecoverMail(user)
-      .subscribe( result => {
+        .subscribe( result => {
           if (result) {
             me.toastr.success(`Hemos enviado un correo a${sentTo} (si existe en nuestra base de datos) para recuperar la contraseña.`);
             me.router.navigate(['/login']);

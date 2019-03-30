@@ -16,6 +16,11 @@ module.exports.getUserById = function (id, callbackFn) {
     User.find({_id: id}, callbackFn);
 };
 
+module.exports.getUserByMail = function (eMail, callbackFn) {
+
+    User.find({_eMail: eMail}, callbackFn);
+};
+
 module.exports.getUserByExactUserName = function (userName, callbackFn) {
 
     User.find({username: userName}, callbackFn);

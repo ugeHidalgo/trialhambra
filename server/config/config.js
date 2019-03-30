@@ -53,6 +53,7 @@ module.exports = {
         secure: true,
         user: 'trialhambranoreply@gmail.com',
         pass: 'trialhambra12A.g',
-        subject: 'Correo de recuperación de cuenta triAlhambra'
+        subject: 'Correo de recuperación de cuenta triAlhambra',
+        recoveryUrl: 'http://192.168.1.25:4200/recover/'
     }
 };
