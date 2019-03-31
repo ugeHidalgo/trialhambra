@@ -41,23 +41,32 @@ module.exports.updateUser = function (user, callbackFn) {
     }
 };
 
-module.exports.updateUserPassword = function (username, password, callbackFn) {
+module.exports.updateUserPassword = function (username, hashedPassword, password, callbackFn) {
 
     var salt = hasher.createSalt(),
         updatedValues = {
             password: hasher.computeHash(password, salt),
-            salt: salt
+            salt: salt,
+            updated: new Date()
          };
 
     User.findOneAndUpdate(
-    {username: username},
+    {
+        username: username,
+        password: hashedPassword
+    },
     { $set: updatedValues },
-    function (error){
+    function (error, updatedUser){
         if (error){
             callbackFn(error, false);
         } else {
-            console.log ('Password updated for username ' + username);
-            callbackFn(null, true)
+            if (updatedUser) {
+                console.log ('Password updated for username ' + username);
+                callbackFn(null, true)
+            } else {
+                console.log ('Password was not updated for username ' + username + ' because hashed password is not valid.');
+                callbackFn(null, false)
+            }
         }
     });
 };

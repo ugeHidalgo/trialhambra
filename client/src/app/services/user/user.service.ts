@@ -35,13 +35,15 @@ export class UserService {
   }
 
   /**.*/
-  updateUserPassword(userName: string, password: any): Observable<boolean> {
+  updateUserPassword(userName: string, oldHashedPassword, newPassword: any): Observable<boolean> {
     const me = this,
-          user: User = new User,
           updateUserPasswordUrl = `${me.userUrl}/${userName}`;
+    let data = {
+      hashedPassword: oldHashedPassword,
+      newPassword: newPassword
+    };
 
-    user.password = password;
-    return me.http.post<any>(updateUserPasswordUrl, user);
+    return me.http.post<any>(updateUserPasswordUrl, data);
   }
 
   /**.*/

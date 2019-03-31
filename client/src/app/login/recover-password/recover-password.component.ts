@@ -45,7 +45,6 @@ export class RecoverPasswordComponent implements OnInit {
     me.password = '';
     me.password2 = '';
 
-    //Todo: Check if hashedPassword is correct. If not go to login page again.
     if (me.hashedPassword === '*' ){
       me.router.navigate(['/login']);
       me.toastr.error('Un problema impidió recuperar la contraseña. Por favor, inténtelo de nuevo.');
@@ -104,14 +103,14 @@ export class RecoverPasswordComponent implements OnInit {
   saveNewPassword(): any {
     const me = this;
 
-    me.userService.updateUserPassword(me.username, me.password)
+    me.userService.updateUserPassword(me.username, me.hashedPassword, me.password)
       .subscribe( result => {
           if (result) {
-            me.router.navigate(['/login']);
             me.toastr.success('Contraseña actualizada correctamente.');
           } else {
             me.toastr.error('Un problema impidió recuperar la contraseña. Por favor, inténtelo de nuevo.');
           }
+          me.router.navigate(['/login']);
       });
   }
 

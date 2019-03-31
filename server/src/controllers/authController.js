@@ -59,19 +59,25 @@ module.exports.init = function (app) {
     });
 
     // Updates an user password.
-    // (POST)http:localhost:3000/api/username body: {password: 'kahdakjsh'}
+    // (POST)http:localhost:3000/api/username body: {hashedPassword: '...', newPassword: '...'}
     app.post('/api/user/:username', function(request, response, next){
 
         var username = request.params.username,
-            password =  request.body.password;
+            hashedPassword = request.body.hashedPassword,
+            password =  request.body.newPassword;
 
-        userManager.updateUserPassword (username, password, function(error){
+        userManager.updateUserPassword (username, hashedPassword, password, function(error, wasUpdated){
                 if (error){
                     console.log('Failed to update username password: ' + error);
                     response.status(400).send(false);
                 } else {
-                    response.set('Content-Type','application/json');
-                    response.status(201).send(true);
+                    if (wasUpdated) {
+                        response.set('Content-Type','application/json');
+                        response.status(201).send(true);
+                    } else {
+                        console.log('Failed to update username password: Hashed password not valid.');
+                        response.status(201).send(false);
+                    }
                 }
             });
     });
