@@ -85,7 +85,8 @@
                                 <p>¿Tienes ya una cuenta de usuario? <a [routerLink]="['/login']">Inicio de sesión</a></p>
                             </div>
                             <div class="text-center mt-2">
-                                <button class="btn btn-info waves-light" mdbRippleRadius (click)="register()">Crear usuario
+                                <button class="btn btn-info waves-light" mdbRippleRadius (click)="register()" [disabled]="validatingForm.invalid">
+                                    Crear usuario
                                     <i class="fa fa-sign-in ml-1"></i>
                                 </button>
                             </div>

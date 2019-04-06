@@ -67,7 +67,7 @@ export class RegisterComponent implements OnInit {
         ]),
         updateOn: 'blur'
       }),
-      password2: new FormControl(''),
+      password2: new FormControl('',{ updateOn: 'blur'}),
       email: new FormControl('', {
         validators: Validators.compose ([
           Validators.required,
