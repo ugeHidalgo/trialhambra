@@ -35,28 +35,27 @@ var url = require ('url'),
 module.exports.init = function (app) {
 
     // Send a password recovery mail to the user.
-    // (POST)http:localhost:3000/api/user/userrecover body: {firstName: 'a name', username:'ugeHidalgo', ...}
+    // (POST)http:localhost:3000/api/user/userrecover body: {username: 'a name', eMail:'pop@pop.es'}
     app.post('/api/user/userrecover', function(request, response, next){
 
         var userToRecover =  request.body.username,
-            mailToRecover = request.body.email,
+            mailToRecover = request.body.eMail,
             userPass = '';
 
-        if (userToRecover !== ''){
-            userManager.getUserByUserName(userToRecover, function (error, user) {
-                if (!error) {
-                    userPass = user[0].password;
+        userManager.getUserByExactUserName(userToRecover, function (error, users) {
+            if (!error) {
+                if (users.length === 0) {
+                    console.log('Recover password: Unknown Username. No mail was sent.')
+                    response.status(201).send(true);
+                } else if (users[0].eMail === mailToRecover) {
+                    userPass = users[0].password;
                     sendMailToRecover(response, userToRecover, userPass);
+                } else  {
+                    console.log('Recover password: Bad email for username to recover. No mail was sent.')
+                    response.status(201).send(true);
                 }
-            });
-        } else {
-            userManager.getUserByUserMail(mailToRecover,sendMailToRecover(response, function (error, user) {
-                if (!error) {
-                    userPass = user[0].password;
-                    sendMailToRecover(response, userToRecover, userPass);
-                }
-            }));
-        }
+            }
+        });
     });
 
     // Updates an user password.
@@ -108,9 +107,9 @@ module.exports.init = function (app) {
 
         auth.isUsedUsername ( username, function(error, result){
              if (error){
-                res.status(400).send('There was an error trying to veriy if ' + username + 'is in use.');
+                res.status(400).send('There was an error trying to veriy if "' + username + '" is in use.');
             } else {
-                console.log('Verified if username: ' + username + 'is used: ' + result);
+                console.log('Verified if username "' + username + '" is already used: ' + result);
                 res.set('Content-Type','application/json');
                 res.status(201).send(result);
             }
@@ -152,7 +151,7 @@ module.exports.init = function (app) {
               console.log(error);
               response.status(400).send(false);
             } else {
-              console.log('Email sent to : ' + userToRecover + '. Info:' + info.response);
+              console.log('Recover password: Email sent to : ' + userToRecover + '. Info:' + info.response);
               response.set('Content-Type','text/html');
               response.status(201).send(true);
             }
