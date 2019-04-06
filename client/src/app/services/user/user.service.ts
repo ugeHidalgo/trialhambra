@@ -20,6 +20,14 @@ export class UserService {
   }
 
   /**.*/
+  isExistingUsername(username: string): Observable<boolean> {
+    const me = this,
+          getUserUrl = `${me.authUserUrl}/isusedusername/?username=${username}`;
+
+    return me.http.get<boolean>(getUserUrl);
+  }
+
+  /**.*/
   isUserAuthenticated(userData: any): Observable<any> {
     return this.http.post<any>(this.authUserUrl, userData);
   }

@@ -1,5 +1,5 @@
 import { Component, OnInit, ViewContainerRef } from '@angular/core';
-import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { FormBuilder, FormGroup, Validators, FormControl, ValidatorFn } from '@angular/forms';
 import { Router } from '@angular/router';
 import { ToastrService } from 'ngx-toastr';
 
@@ -13,10 +13,29 @@ import { User } from '../../models/user.model';
 })
 export class RegisterComponent implements OnInit {
 
+  myUserService: UserService;
   user: User = new User();
   loading = false;
   validatingForm: FormGroup;
   submitted = false;
+  validation_messages = {
+    'username': [
+      { type: 'required', message: 'El nombre de usuario es obligatorio.'},
+      { type: 'isUsedUsername', message: 'Este nombre de usuario ya está en uso.'}
+    ],
+    'email': [
+      { type: 'required', message: 'El correo electrónico es obligatorio.'},
+      { type: 'email', message: 'Correo electrónico no válido.'}
+    ],
+    'password': [
+      { type: 'required', message: 'La contraseña nueva es obligatoria.'},
+      { type: 'minlength', message: 'La contraseña debe tener un mínimo de seis caracteres.'}
+    ],
+    'password2': [
+      { type: 'required', message: 'Es obligatorio reescribir la nueva contraseña.'},
+      { type: 'shouldMatch', message: 'Las contraseñas deben ser iguales'}
+    ]
+  }
 
   constructor(
     private router: Router,
@@ -24,7 +43,8 @@ export class RegisterComponent implements OnInit {
     public toastr: ToastrService,
     private fb: FormBuilder,
     vcr: ViewContainerRef ) {
-    this.createForm();
+      this.myUserService = userService;
+      this.createForm();
  }
 
   ngOnInit() {
@@ -33,16 +53,37 @@ export class RegisterComponent implements OnInit {
   createForm() {
     const me = this;
 
-    me.validatingForm = me.fb.group({
-      username: [ '', Validators.required ],
-      firstname: '',
-      lastname: '',
-      password: ['', [Validators.required, Validators.minLength(6)]],
-      password2: '',
-      email: [ '', [Validators.required, Validators.email]]
-    }, {
-      validator: me.shouldMatch('password', 'password2')
-  });
+    me.validatingForm = new FormGroup({
+      username: new FormControl ('', {
+        validators: Validators.required,
+        updateOn: 'blur'
+      }),
+      firstname: new FormControl (''),
+      lastname: new FormControl(''),
+      password: new FormControl('', {
+        validators: Validators.compose ([
+          Validators.required,
+          Validators.minLength(6)
+        ]),
+        updateOn: 'blur'
+      }),
+      password2: new FormControl(''),
+      email: new FormControl('', {
+        validators: Validators.compose ([
+          Validators.required,
+          Validators.email
+        ]),
+        updateOn: 'blur'
+      }),
+    }, Validators.compose ([
+        (formGroup: any) => {
+          return me.shouldMatch(formGroup, 'password', 'password2');
+        },
+        (formGroup: any) => {
+          return me.isUsedUsername(formGroup, me.myUserService, 'username');
+        }
+      ])
+    );
   }
 
   register() {
@@ -50,6 +91,7 @@ export class RegisterComponent implements OnInit {
 
     me.loading = true;
     me.submitted = true;
+    me.user = this.getFormData();
 
     if (this.validatingForm.invalid) {
         return;
@@ -68,24 +110,60 @@ export class RegisterComponent implements OnInit {
       );
   }
 
-  shouldMatch(controlName1: string, controlName2: string) {
-    return (formGroup: FormGroup) => {
-      const control1 = formGroup.controls[controlName1],
-            control2 = formGroup.controls[controlName2];
+  getFormData(): User {
+    const me = this,
+          formModel = me.validatingForm.value,
+          newUser: User = me.user;
 
-      if (control1.errors) {
-        return;
-      }
+    newUser.username = formModel.username;
+    newUser.firstName = formModel.firstname;
+    newUser.lastName = formModel.lastname;
+    newUser.eMail = formModel.email;
+    newUser.password = formModel.password;
 
-      if (control2.errors && !control2.errors.shouldMatch) {
-        return;
-      }
+    return newUser;
+  }
 
-      if (control1.value !== control2.value) {
-        control2.setErrors( {shouldMatch: true});
-      } else {
-        control2.setErrors(null);
-      }
+  isUsedUsername (formGroup: FormGroup, userService: UserService, controlName: string): {[key: string]: boolean} {
+    const control = formGroup.controls[controlName];
+    let username = '';
+
+    if (control.errors && !control.errors.isUsedUsername) {
+      return;
+    }
+
+    username = control.value
+
+    userService.isExistingUsername(username)
+      .subscribe(isExistingUsername => {
+        if (isExistingUsername) {
+          control.setErrors( {isUsedUsername: true});
+          return {isUsedUsername: true}
+        } else {
+          control.setErrors(null);
+          return null
+        }
+      });
+  }
+
+  shouldMatch(formGroup: FormGroup, controlName1: string, controlName2: string): {[key: string]: boolean} {
+    const control1 = formGroup.controls[controlName1],
+          control2 = formGroup.controls[controlName2];
+
+    if (control1.errors) {
+      return;
+    }
+
+    if (control2.errors && !control2.errors.shouldMatch) {
+      return;
+    }
+
+    if (control1.value !== control2.value) {
+      control2.setErrors( {shouldMatch: true});
+      return {shouldMatch: true};
+    } else {
+      control2.setErrors(null);
+      return null;
     }
   }
 }

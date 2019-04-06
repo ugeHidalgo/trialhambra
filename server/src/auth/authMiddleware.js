@@ -13,6 +13,21 @@ var jwt = require('jsonwebtoken'),
  * Public methods.
  */
 
+ /**
+ * Function used to verify if an username is in use.
+ */
+module.exports.isUsedUsername = function (receivedUsername, callbackFn) {
+
+    userManager.getUserByExactUserName(receivedUsername, function (error, userInDb) {
+
+        if (error) { return callbackFn(error); }
+        if (!userInDb || userInDb.length === 0) {
+            return callbackFn(null, false);
+        }
+        return callbackFn (null, true);
+    });
+};
+
 /**
  * Function used to verify if an user was succesfully authenticathed.
  */

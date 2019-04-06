@@ -15,58 +15,66 @@
                         <mdb-card-body>
                             <div class="container-fluid">
                                 <form [formGroup]="validatingForm">
+
                                     <div class="row">
                                         <div class="md-form form-sm col-md-5">
-                                            <input mdbInput type="text" id="username" class="form-control"
-                                                [(ngModel)]="user.username" formControlName="username">
-                                            <label for="username">Usuario</label>
-                                            <div *ngIf="validatingForm.controls['username'].errors && submitted">
-                                                <div class="alert alert-danger" *ngIf="validatingForm.controls['username'].errors.required">El ususario es obligatorio</div>
-                                            </div>
+                                            <mat-form-field class="full-width-form-field" >
+                                                <input matInput type="text" formControlName="username" placeholder="Nombre de usuario:" required>
+                                                <mat-error *ngFor="let validation of validation_messages.username">
+                                                    <mat-error *ngIf="validatingForm.get('username').hasError(validation.type) && (validatingForm.get('username').dirty || validatingForm.get('username').touched)">
+                                                        {{validation.message}}
+                                                    </mat-error>
+                                                </mat-error>
+                                            </mat-form-field>
                                         </div>
                                         <div class="md-form form-sm col-md-7">
-                                            <i class="fa fa-envelope prefix"></i>
-                                            <input mdbInput type="email" id="email" class="form-control"
-                                                [(ngModel)]="user.eMail" formControlName="email">
-                                            <label for="email">Correo electrónico</label>
-                                            <div *ngIf="validatingForm.controls['email'].errors && submitted">
-                                                <div class="alert alert-danger" *ngIf="validatingForm.controls['email'].errors.required">El correo electrónico es obligatorio</div>
-                                                <div class="alert alert-danger" *ngIf="validatingForm.controls['email'].errors.email">Correo electrónico no válido</div>
-                                            </div>
+                                            <mat-form-field class="full-width-form-field" >
+                                                <mat-icon matPrefix><i class="fa fa-envelope"></i></mat-icon>
+                                                <input matInput type="email" formControlName="email" placeholder="Correo electrónico:" required>
+                                                <mat-error *ngFor="let validation of validation_messages.email">
+                                                    <mat-error *ngIf="validatingForm.get('email').hasError(validation.type) && (validatingForm.get('email').dirty || validatingForm.get('email').touched)">
+                                                        {{validation.message}}
+                                                    </mat-error>
+                                                </mat-error>
+                                            </mat-form-field>
                                         </div>
                                     </div>
 
                                     <div class="row">
                                         <div class="md-form form-sm col-md-4">
-                                            <input mdbInput type="text" id="firstname" class="form-control"
-                                                [(ngModel)]="user.firstName" formControlName="firstname">
-                                            <label for="firstname">Nombre</label>
+                                            <mat-form-field class="full-width-form-field" >
+                                                <input matInput type="text" formControlName="firstname" placeholder="Nombre:" >
+                                            </mat-form-field>
                                         </div>
                                         <div class="md-form form-sm col-md-8">
-                                            <input mdbInput type="text" id="lastname" class="form-control"
-                                                [(ngModel)]="user.lastName" formControlName="lastname">
-                                            <label for="lastname">Apellidos</label>
+                                            <mat-form-field class="full-width-form-field" >
+                                                <input matInput type="text" formControlName="lastname" placeholder="Apellidos:" >
+                                            </mat-form-field>
                                         </div>
                                     </div>
 
                                     <div class="row">
                                         <div class="md-form form-sm col-md-6">
-                                                <i class="fa fa-lock prefix"></i>
-                                                <input mdbInput type="password" id="password" class="form-control"
-                                                    [(ngModel)]="user.password" formControlName="password">
-                                                <label for="password"> Contraseña</label>
-                                                <div *ngIf="validatingForm.controls['password'].errors && submitted">
-                                                    <div class="alert alert-danger" *ngIf="validatingForm.controls['password'].errors.required">La contraseña es obligatoria</div>
-                                                    <div class="alert alert-danger" *ngIf="validatingForm.controls['password'].errors.minlength">La contraseña debe tener al menos 6 caracteres</div>
-                                                </div>
+                                            <mat-form-field class="full-width-form-field" >
+                                                <mat-icon matPrefix><i class="fa fa-lock"></i></mat-icon>
+                                                <input matInput type="password" formControlName="password" placeholder="Contraseña:" required>
+                                                <mat-error *ngFor="let validation of validation_messages.password">
+                                                    <mat-error *ngIf="validatingForm.get('password').hasError(validation.type) && (validatingForm.get('password').dirty || validatingForm.get('password').touched)">
+                                                        {{validation.message}}
+                                                    </mat-error>
+                                                </mat-error>
+                                            </mat-form-field>
                                         </div>
                                         <div class="md-form form-sm col-md-6">
-                                                <i class="fa fa-lock prefix"></i>
-                                                <input mdbInput type="password" id="password2" class="form-control" formControlName="password2">
-                                                <label for="password2">Repetir contraseña</label>
-                                                <div *ngIf="validatingForm.controls['password2'].errors && submitted">
-                                                    <div class="alert alert-danger" *ngIf="validatingForm.controls['password2'].errors.shouldMatch">Las contraseñas no coinciden</div>
-                                                </div>
+                                            <mat-form-field class="full-width-form-field" >
+                                                <mat-icon matPrefix><i class="fa fa-lock"></i></mat-icon>
+                                                <input matInput type="password" formControlName="password2" placeholder="Contraseña:" required>
+                                                <mat-error *ngFor="let validation of validation_messages.password2">
+                                                    <mat-error *ngIf="validatingForm.get('password2').hasError(validation.type) && (validatingForm.get('password2').dirty || validatingForm.get('password2').touched)">
+                                                        {{validation.message}}
+                                                    </mat-error>
+                                                </mat-error>
+                                            </mat-form-field>
                                         </div>
                                     </div>
                                 </form>

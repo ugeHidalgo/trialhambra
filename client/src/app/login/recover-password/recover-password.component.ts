@@ -95,9 +95,10 @@ export class RecoverPasswordComponent implements OnInit {
     const me = this;
 
     me.password = me.passwordsForm.value.password;
-    if (!me.passwordsForm.invalid) {
-      me.saveNewPassword();
+    if (me.passwordsForm.invalid) {
+      return;
     }
+    me.saveNewPassword();
   }
 
   saveNewPassword(): any {

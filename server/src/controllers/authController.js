@@ -4,7 +4,8 @@
 /**
  * Module dependencies.
  */
-var config = require('../../config/config'),
+var url = require ('url'),
+    config = require('../../config/config'),
     nodemailer = require('nodemailer'),
     smtpTransport = require('nodemailer-smtp-transport'),
     userManager = require('../managers/userManager'),
@@ -95,6 +96,24 @@ module.exports.init = function (app) {
                 response.set('Content-Type','application/json');
                 response.status(201).send(updatedUser);
              }
+        });
+    });
+
+    // Verify if an username is in use
+    // (GET)http:localhost:3000/api/auth/isusedusername/?username=pepe
+    app.get('/api/auth/isusedusername', function(req, res, next){
+
+        var queryString = url.parse(req.url, true).query,
+            username = queryString.username;
+
+        auth.isUsedUsername ( username, function(error, result){
+             if (error){
+                res.status(400).send('There was an error trying to veriy if ' + username + 'is in use.');
+            } else {
+                console.log('Verified if username: ' + username + 'is used: ' + result);
+                res.set('Content-Type','application/json');
+                res.status(201).send(result);
+            }
         });
     });
 
