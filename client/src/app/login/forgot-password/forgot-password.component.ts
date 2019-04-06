@@ -18,10 +18,11 @@ export class ForgotPasswordComponent implements OnInit {
 
   validation_messages = {
     'username': [
-      { type: 'onerequired', message: 'Debe introducir al menos un username o un email.'}
+      { type: 'required', message: 'El nombre de usuario es necesario.'}
     ],
     'email': [
-      { type: 'onerequired', message: 'Debe introducir al menos un username o un email.'}
+      { type: 'required', message: 'El correo electrónico del usuario es necesario.'},
+      { type: 'email', message: 'Correo electrónico no válido.'}
     ]
   }
 
@@ -41,35 +42,24 @@ export class ForgotPasswordComponent implements OnInit {
     const me = this;
 
     me.forgotForm = new FormGroup({
-      username: new FormControl ( '', {}),
-      email: new FormControl ( '', {})
-    }, (formGroup: FormGroup) => {
-      return this.oneAtLeastEntered(formGroup, "username", "email")
+      username: new FormControl ( '', {
+        validators: Validators.required,
+        updateOn: 'blur'
+      }),
+      email: new FormControl ( '', {
+        validators: Validators.compose ([
+          Validators.required, Validators.email
+        ]),
+        updateOn: 'blur'
+      })
     });
-  }
-
-  oneAtLeastEntered(formGroup: FormGroup, controlName1: string, controlName2: string) {
-    const control1 = formGroup.controls[controlName1],
-          control2 = formGroup.controls[controlName2];
-
-    if (control1.value === "" && control2.value === "") {
-      control1.setErrors( {onerequired: true});
-      control2.setErrors( {onerequired: true});
-      return {onerequired: true}
-    }
-
-    control1.setErrors(null);
-    control2.setErrors(null);
-    return null;
   }
 
   onResetPassword() {
     const me = this,
           user = new User();
-    let sentTo: string = '';
 
     me.getFormData();
-    sentTo = me.setMessageReciever();
     user.username = me.username;
     user.eMail = me.email;
 
@@ -77,7 +67,7 @@ export class ForgotPasswordComponent implements OnInit {
       me.userService.sendUserPasswordRecoverMail(user)
         .subscribe( result => {
           if (result) {
-            me.toastr.success(`Hemos enviado un correo a${sentTo} (si existe en nuestra base de datos) para recuperar la contraseña.`);
+            me.toastr.success(`Hemos enviado un correo a su cuenta(si existe en nuestra base de datos) para recuperar la contraseña.`);
             me.router.navigate(['/login']);
           } else {
             me.toastr.error('Un problema impidió recuperar la contraseña. Por favor, inténtelo de nuevo.');
@@ -93,15 +83,4 @@ export class ForgotPasswordComponent implements OnInit {
     me.username = formModel.username;
     me.email = formModel.email;
   }
-
-  setMessageReciever(): string {
-    const me = this;
-
-    if (me.username !== ''){
-      return `l usuario  ${me.username}`;
-    }
-
-    return ` ${me.email}`;
-  }
-
 }
