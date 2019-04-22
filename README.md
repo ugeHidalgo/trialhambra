@@ -62,7 +62,7 @@ ___
     ```
     Access site to http://localhost:3000
 
-    Launch client side with any of these:
+    Launch client side with any of these: (Install angular-cli if not present with: npm install -g @angular/cli)
     ```
         - ng serve
         - ng serve --host 0.0.0.0  (If you want to connect to your client side server from other machine different than localhost)
